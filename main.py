@@ -1,5 +1,6 @@
+def main():
+    return 0
 
-print(hola)
-if __name__ == "main":
-    print(hola)
 
+if __name__ == "__main__":
+    main()
