@@ -10,10 +10,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 def main():
 
-    app = QtWidgets.QApplication(sys.argv)
-    Ventana = MainWindow()
-    Ventana.show()
-    sys.exit(app.exec())
+    aplicacion = QtWidgets.QApplication(sys.argv)
+    ventana = MainWindow()
+    ventana.show()
+    sys.exit(aplicacion.exec())
 
 
 if __name__ == "__main__":
