@@ -1,6 +1,8 @@
 def main():
-    return 0
 
+    print("Probado git")
+
+    return 0
 
 if __name__ == "__main__":
     main()
