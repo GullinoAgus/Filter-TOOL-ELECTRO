@@ -27,7 +27,7 @@
        <attribute name="title">
         <string>Filter Tools</string>
        </attribute>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>70</x>
@@ -241,7 +241,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>540</x>
@@ -252,21 +252,21 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QGroupBox" name="groupBox_3">
+          <widget class="QGroupBox" name="PolesAndZerosBox">
            <property name="title">
-            <string>Poles and Ceros</string>
+            <string>Poles and Zeros</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_4">
+          <widget class="QGroupBox" name="BodePlotBox">
            <property name="title">
             <string>Bode Plot</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_5">
+          <widget class="QGroupBox" name="InputAndOutputBox">
            <property name="title">
             <string>Input and Output</string>
            </property>
