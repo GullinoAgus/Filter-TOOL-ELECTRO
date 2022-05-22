@@ -184,7 +184,7 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>Clickeadoelbot()</slot>
+   <slot>ClickBoton()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>195</x>
@@ -198,6 +198,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>Clickeadoelbot()</slot>
+  <slot>ClickBoton()</slot>
  </slots>
 </ui>

@@ -69,7 +69,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(1)
         self.Filtro.activated['int'].connect(self.stackedWidget.setCurrentIndex) # type: ignore
-        self.pushButton.clicked.connect(self.Clickeadoelbot)  # type: ignore
+        self.pushButton.clicked.connect(MainWindow.ClickBoton) # type: ignore
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.Filtro, self.lineEdit)
 
     def retranslateUi(self, MainWindow):
@@ -82,8 +83,6 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "xd"))
         self.pushButton.setText(_translate("MainWindow", "PushButton"))
 
-    def Clickeadoelbot(self):
-        print("hola")
 
 if __name__ == "__main__":
     import sys
