@@ -4,4 +4,4 @@ from Filters.Filter import *
 class LowPass(Filter):
     def __init__(self, w0):
         super().__init__()
-        self.transferFunc = signal.ZerosPolesGain([], [w0], 1)  #Zeros Polos Ganancia
+        self.transferFunc = signal.ZerosPolesGain([], [-w0], w0)  #Zeros Polos Ganancia
