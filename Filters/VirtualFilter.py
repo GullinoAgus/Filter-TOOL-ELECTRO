@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-class Filter:
+class VirtualFilter:
     def __init__(self):
         self.transferFunc = signal.ZerosPolesGain([], [], 1)
 

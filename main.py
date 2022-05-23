@@ -12,11 +12,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     @staticmethod
     def ClickBoton():
-        print("matame")
+        print("Matame")
 
     def Prueba(self):
         print("Probando");
 
+    def FORadioButtonActive(self, state):
+        if state == True:
+            self.FilterTypeStackedWidget.setCurrentIndex(0);
+
+    def SORadioButtonActive(self, state):
+        if state == True:
+            self.FilterTypeStackedWidget.setCurrentIndex(1);
+
+    def CurrFilterComboBox(self, index):
+        print(index);
+
+    def CurrInputComboBox(self, index):
+        print(index);
 
 def main():
     #prueba = LowPass.LowPass(50000)
