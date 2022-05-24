@@ -32,6 +32,12 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QGroupBox" name="Config">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="title">
              <string>Configuracion</string>
             </property>
@@ -166,7 +172,7 @@
                       </widget>
                      </item>
                      <item row="0" column="1">
-                      <widget class="QLineEdit" name="lineEdit_4"/>
+                      <widget class="QLineEdit" name="InputFreqLine"/>
                      </item>
                      <item row="1" column="0">
                       <widget class="QLabel" name="label_5">
@@ -176,7 +182,7 @@
                       </widget>
                      </item>
                      <item row="1" column="1">
-                      <widget class="QLineEdit" name="lineEdit_5"/>
+                      <widget class="QLineEdit" name="InputAmpline"/>
                      </item>
                     </layout>
                    </item>
@@ -190,18 +196,13 @@
              <item row="0" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
-                <widget class="QComboBox" name="comboBox_2">
+                <widget class="QComboBox" name="inputComboBox">
                  <property name="minimumSize">
                   <size>
                    <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
-                 <item>
-                  <property name="text">
-                   <string>Sin</string>
-                  </property>
-                 </item>
                  <item>
                   <property name="text">
                    <string>Cos</string>
@@ -245,7 +246,13 @@
          </layout>
         </item>
         <item row="0" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <layout class="QVBoxLayout" name="vertLayoutPlots">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <item>
            <widget class="QGroupBox" name="PolesAndZerosBox">
             <property name="title">

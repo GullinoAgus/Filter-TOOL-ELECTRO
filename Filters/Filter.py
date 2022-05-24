@@ -12,9 +12,10 @@ class Filter:
         w, mag, phase = signal.bode(self.transferFunc)
         return w, mag, phase
 
-    def plotpolesandperos(self):
-        print('NotImplemented')
+    def getpolesandzeros(self):
+        return self.transferFunc.poles, self.transferFunc.zeros
 
-    def plotoutput(self, inputtime, inputvalue):
+    def getoutputfrominput(self, inputtime, inputvalue):
         tout, yout, xout = signal.lsim(self.transferFunc, U=inputvalue, T=inputtime)
+        return tout, yout
 
