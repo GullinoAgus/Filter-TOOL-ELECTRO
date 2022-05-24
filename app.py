@@ -21,8 +21,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.InputAndOutputBox.layout().addWidget(self.InOut.navToolBar)
         self.InputAndOutputBox.layout().addWidget(self.InOut)
 
-    def ClickBoton(self):
-        filtrito = LowPass.LowPass(float(self.omegaZero.text()))
+    def EnterTheMatrix(self):
+        filtrito = LowPass.LowPass(float(self.PFSettingsLineEdit.text()))
         w, a, p = filtrito.getbode()
         self.Bode.plot(w, a, p)
         poles, zeros = filtrito.getpolesandzeros()
@@ -32,22 +32,38 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print(len(points), len(points4expr))
         points4expr = np.append(points4expr, points4expr)
 
-        inputsignal = [1 for i in points]
+        inputsignalpoints = [1 for i in points]
 
-        match self.inputComboBox.currentText():
+        match self.ISComboBox.currentText():
             case 'Cos':
-                inputsignal = float(self.InputAmpline.text()) * np.cos(points * 4 * np.pi)
+                inputsignalpoints = float(self.AInputSignalLineEdit.text()) * np.cos(points * 4 * np.pi)
             case 'Periodic Pulse':
-                inputsignal = float(self.InputAmpline.text()) * signal.square(points * 4 * np.pi)
-            case 'Pulse':
-                print('Pulse')
+                inputsignalpoints = float(self.AInputSignalLineEdit.text()) * signal.square(points * 4 * np.pi)
+            case 'Other':
                 t = sp.Symbol('t', real=True)
-                expr = parse_expr(self.InputAmpline.text(), local_dict={'t': t})
+                expr = parse_expr(self.AInputSignalLineEdit.text(), local_dict={'t': t})
                 print(expr)
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignal = f(points4expr)
+                inputsignalpoints = f(points4expr)
             case _:
                 print('NADA')
 
-        time, output = filtrito.getoutputfrominput(points*2/float(self.InputFreqLine.text()), inputsignal)
-        self.InOut.plot(time, inputsignal, output)
+        time, output = filtrito.getoutputfrominput(points*2/float(self.FInputSignalLineEdit.text()), inputsignalpoints)
+        self.InOut.plot(time, inputsignalpoints, output)
+
+    def Prueba(self):
+        print("Probando");
+
+    def FORadioButtonActive(self, state):
+        if state == True:
+            self.FilterTypeStackedWidget.setCurrentIndex(0);
+
+    def SORadioButtonActive(self, state):
+        if state == True:
+            self.FilterTypeStackedWidget.setCurrentIndex(1);
+
+    def CurrFilterComboBox(self, index):
+        print(index);
+
+    def CurrInputComboBox(self, index):
+        print(index);

@@ -257,8 +257,8 @@ class Ui_MainWindow(object):
         self.BodePlotBox = QtWidgets.QGroupBox(self.FilterTools)
         self.BodePlotBox.setMinimumSize(QtCore.QSize(300, 300))
         self.BodePlotBox.setObjectName("BodePlotBox")
-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.BodePlotBox)
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.gridLayout_15 = QtWidgets.QGridLayout(self.BodePlotBox)
+        self.gridLayout_15.setObjectName("gridLayout_15")
         self.horizontalLayout_6.addWidget(self.BodePlotBox)
         self.verticalLayout_4.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
@@ -266,11 +266,15 @@ class Ui_MainWindow(object):
         self.InputAndOutputBox = QtWidgets.QGroupBox(self.FilterTools)
         self.InputAndOutputBox.setMinimumSize(QtCore.QSize(300, 300))
         self.InputAndOutputBox.setObjectName("InputAndOutputBox")
+        self.gridLayout_16 = QtWidgets.QGridLayout(self.InputAndOutputBox)
+        self.gridLayout_16.setObjectName("gridLayout_16")
         self.horizontalLayout_5.addWidget(self.InputAndOutputBox)
         self.PolesAndZerosBox = QtWidgets.QGroupBox(self.FilterTools)
         self.PolesAndZerosBox.setMinimumSize(QtCore.QSize(300, 300))
         self.PolesAndZerosBox.setMaximumSize(QtCore.QSize(9999999, 999999))
         self.PolesAndZerosBox.setObjectName("PolesAndZerosBox")
+        self.gridLayout_17 = QtWidgets.QGridLayout(self.PolesAndZerosBox)
+        self.gridLayout_17.setObjectName("gridLayout_17")
         self.horizontalLayout_5.addWidget(self.PolesAndZerosBox)
         self.verticalLayout_4.addLayout(self.horizontalLayout_5)
         self.gridLayout_13.addLayout(self.verticalLayout_4, 0, 1, 1, 1)
@@ -283,13 +287,14 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(1)
         self.FilterTypeStackedWidget.setCurrentIndex(0)
         self.InputTypeStackedWidget.setCurrentIndex(1)
         self.FORadio.toggled['bool'].connect(MainWindow.FORadioButtonActive) # type: ignore
         self.SORadio.toggled['bool'].connect(MainWindow.SORadioButtonActive) # type: ignore
         self.FOComboBox.activated['int'].connect(MainWindow.CurrFilterComboBox) # type: ignore
         self.ISComboBox.activated['int'].connect(MainWindow.CurrInputComboBox) # type: ignore
+        self.pushButton.clicked.connect(MainWindow.EnterTheMatrix) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

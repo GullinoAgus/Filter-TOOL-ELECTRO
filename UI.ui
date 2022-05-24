@@ -45,7 +45,7 @@
              <item row="1" column="0">
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>3</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="page">
                 <layout class="QVBoxLayout" name="verticalLayout">
@@ -459,7 +459,7 @@
               <property name="title">
                <string>Bode Plot</string>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_7"/>
+              <layout class="QGridLayout" name="gridLayout_15"/>
              </widget>
             </item>
            </layout>
@@ -477,6 +477,7 @@
               <property name="title">
                <string>Input and Output</string>
               </property>
+              <layout class="QGridLayout" name="gridLayout_16"/>
              </widget>
             </item>
             <item>
@@ -496,6 +497,7 @@
               <property name="title">
                <string>Poles and Zeros</string>
               </property>
+              <layout class="QGridLayout" name="gridLayout_17"/>
              </widget>
             </item>
            </layout>
@@ -523,8 +525,8 @@
    <slot>FORadioButtonActive(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>78</x>
-     <y>76</y>
+     <x>99</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -539,8 +541,8 @@
    <slot>SORadioButtonActive(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>72</y>
+     <x>406</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -555,8 +557,8 @@
    <slot>CurrFilterComboBox(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>107</x>
-     <y>106</y>
+     <x>127</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -571,12 +573,28 @@
    <slot>CurrInputComboBox(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>75</x>
-     <y>444</y>
+     <x>95</x>
+     <y>479</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
      <y>441</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>EnterTheMatrix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>134</x>
+     <y>753</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>741</y>
     </hint>
    </hints>
   </connection>
@@ -586,5 +604,6 @@
   <slot>SORadioButtonActive(bool)</slot>
   <slot>CurrFilterComboBox(int)</slot>
   <slot>CurrInputComboBox(int)</slot>
+  <slot>EnterTheMatrix()</slot>
  </slots>
 </ui>
