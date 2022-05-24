@@ -1,5 +1,6 @@
 # noinspection PyUnresolvedReferences
 import sys
+import app
 from Filters import LowPass
 import numpy as np
 from UI import *
@@ -35,8 +36,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print(index);
 
 def main():
-    aplicacion = QtWidgets.QApplication(sys.argv)
-    ventana = MainWindow()
+    aplicacion = app.QtWidgets.QApplication(sys.argv)
+    ventana = app.MainWindow()
     ventana.show()
     sys.exit(aplicacion.exec())
 
