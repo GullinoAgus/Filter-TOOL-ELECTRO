@@ -1,10 +1,14 @@
+import sys
+import tokenize
 import numpy as np
-from scipy import signal
-from Filters import LowPass
-import plotWidget as pw
 import sympy as sp
+from PyQt6 import QtWidgets
+from scipy import signal
 from sympy.parsing.sympy_parser import parse_expr
-from UI import *
+
+import plotWidget as pw
+from Filters import FirstOrder
+from UI import Ui_MainWindow
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -22,48 +26,129 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.InputAndOutputBox.layout().addWidget(self.InOut)
 
     def EnterTheMatrix(self):
-        filtrito = LowPass.LowPass(float(self.PFSettingsLineEdit.text()))
-        w, a, p = filtrito.getbode()
-        self.Bode.plot(w, a, p)
-        poles, zeros = filtrito.getpolesandzeros()
-        self.PolesZeros.plot(poles, zeros)
+
+        try:
+            filtro = self.buildFilter()
+            w, a, p = filtro.getbode()
+            self.Bode.plot(w, a, p)
+            poles, zeros = filtro.getpolesandzeros()
+            self.PolesZeros.plot(poles, zeros)
+            t, inputsignal = self.buildInput()
+
+            time, output = filtro.getoutputfrominput(t, inputsignal)
+            self.InOut.plot(time, inputsignal, output)
+        except ValueError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
+            pass
+        except NameError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
+                                                          "contiene una funcion predefinida.")
+            pass
+        except AttributeError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
+                                                          "contiene una funcion predefinida.")
+            pass
+        except TypeError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
+            tupla = sys.exc_info()
+            print(tupla)
+            pass
+        except tokenize.TokenError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
+                                                          "contiene una funcion predefinida.")
+            pass
+        except SyntaxError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
+                                                          "contiene una funcion predefinida.")
+            pass
+
+    def buildFilter(self):  # TODO arreglar cuando la interfaz este completa
+        if self.FORadio.isChecked():
+            match self.FOComboBox.currentText():
+                case 'Low Pass':
+                    return FirstOrder.LowPass(float(self.PFSettingsLineEdit.text()))
+                case 'High Pass':
+                    return FirstOrder.HighPass(float(self.PFSettingsLineEdit.text()))
+                case 'All Pass':
+                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                case 'Create new filter':  # TODO terminar Create new filter de primer orden
+                    print('TODO')
+                case _:
+                    print('No es por ahi')
+        elif self.SORadio.isChecked():
+            match self.SOComboBox.currentText():  # TODO terminar matchcase de segundo orden
+                case 'Low Pass':
+                    return FirstOrder.LowPass(float(self.PFSettingsLineEdit.text()))
+                case 'High Pass':
+                    return FirstOrder.HighPass(float(self.PFSettingsLineEdit.text()))
+                case 'All Pass':
+                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                case 'Band Pass':
+                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                case 'Notch':
+                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                case 'Low-Pass Notch':
+                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                case 'High-Pass Notch':
+                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                case 'Create new filter':
+                    print('TODO')
+                case _:
+                    print('No es por ahi')
+
+    def buildInput(self):  # TODO arreglar cuando la interfaz este completa
         points = np.linspace(0, 1, 1000, endpoint=True)
         points4expr = np.linspace(0, 1, 500, endpoint=True)
-        print(len(points), len(points4expr))
         points4expr = np.append(points4expr, points4expr)
-
-        inputsignalpoints = [1 for i in points]
 
         match self.ISComboBox.currentText():
             case 'Cos':
                 inputsignalpoints = float(self.AInputSignalLineEdit.text()) * np.cos(points * 4 * np.pi)
+            case 'Step':
+                inputsignalpoints = [1 for i in points]
             case 'Periodic Pulse':
-                inputsignalpoints = float(self.AInputSignalLineEdit.text()) * signal.square(points * 4 * np.pi)
+                inputsignalpoints = float(self.AInputSignalLineEdit.text()) * (signal.square(points * 4 * np.pi) - 0.5)
+            case 'Triangle Periodic Pulse':
+                t = sp.Symbol('t', real=True)
+                expr = float(self.AInputSignalLineEdit.text()) * sp.Piecewise((-t + 1 / 4, t <= 1 / 2),
+                                                                              (t - 3 / 4, t > 1 / 2))
+                f = sp.lambdify(t, expr, "numpy")
+                inputsignalpoints = f(points4expr)
             case 'Other':
                 t = sp.Symbol('t', real=True)
-                expr = parse_expr(self.AInputSignalLineEdit.text(), local_dict={'t': t})
-                print(expr)
+                expr = parse_expr(self.correctExpression(self.AInputSignalLineEdit.text()), local_dict={'t': t})
+
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
             case _:
                 print('NADA')
 
-        time, output = filtrito.getoutputfrominput(points*2/float(self.FInputSignalLineEdit.text()), inputsignalpoints)
-        self.InOut.plot(time, inputsignalpoints, output)
+        return points * 2 / float(self.FInputSignalLineEdit.text()), inputsignalpoints
+
+    def correctExpression(self, expr: str):
+        validfuncs = sp.functions.__all__
+        exprlower = expr.lower()
+        correctedexpr = ""
+        for funct in validfuncs:
+            if funct.lower()+'(' in exprlower:
+                correctedexpr = exprlower.replace(funct.lower(), funct)
+        print(expr, correctedexpr)
+        return correctedexpr
+
 
     def Prueba(self):
-        print("Probando");
+        print("Probando")
 
     def FORadioButtonActive(self, state):
         if state == True:
-            self.FilterTypeStackedWidget.setCurrentIndex(0);
+            self.FilterTypeStackedWidget.setCurrentIndex(0)
 
     def SORadioButtonActive(self, state):
         if state == True:
-            self.FilterTypeStackedWidget.setCurrentIndex(1);
+            self.FilterTypeStackedWidget.setCurrentIndex(1)
 
     def CurrFilterComboBox(self, index):
-        print(index);
+        print(index)
 
     def CurrInputComboBox(self, index):
         print(index);

@@ -1,8 +1,7 @@
 import numpy as np
-from matplotlib.backends.qt_compat import QtWidgets
 from matplotlib.widgets import Cursor
-from matplotlib.backends.backend_qtagg import (
-    FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
+from matplotlib.backends.backend_qtagg import FigureCanvas
+from matplotlib.backends.backend_qt import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 import mplcursors
 
@@ -12,9 +11,8 @@ class MplCanvas(FigureCanvas):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.fig.add_subplot()
         self.fig.set_tight_layout(True)
-        self.parent = parent
-        super(MplCanvas, self).__init__(self.fig)
-        self.navToolBar = NavigationToolbar(self, parent)
+        super().__init__(self.fig)
+        self.navToolBar = NavigationToolbar(self, parent=parent)
 
 
 class BodePlot(MplCanvas):
@@ -35,7 +33,7 @@ class BodePlot(MplCanvas):
             self.phaseaxes.cla()
             return
 
-        self.getPhaseAxes()
+        self.getphaseaxes()
         self.axes.set_xscale("linear")
         self.axes.cla()
         self.phaseaxes.cla()
@@ -49,7 +47,7 @@ class BodePlot(MplCanvas):
         self.fig.canvas.draw()
         self.fig.canvas.flush_events()
 
-    def getPhaseAxes(self):
+    def getphaseaxes(self):
         if self.phaseaxes is None:
             self.phaseaxes = self.axes.twinx()
 
@@ -94,6 +92,7 @@ class PolesZerosPlot(MplCanvas):
 
     def plot(self, poles=None, zeros=None):
         self.axes.cla()
+        self.axes.format_coord = format_coord_complex
         if len(poles) != 0:
             self.polesline = self.axes.scatter(np.real(poles), np.imag(poles), c='Red', marker='x')
             self.polesdataCursor = mplcursors.cursor(self.polesline)
@@ -101,7 +100,6 @@ class PolesZerosPlot(MplCanvas):
             self.zerosline = self.axes.scatter(np.real(zeros), np.imag(zeros), c='Blue', marker='o')
             self.zerosdataCursor = mplcursors.cursor(self.zerosline)
 
-        self.axes.format_coord = format_coord_complex
         self.cursor = Cursor(self.axes, useblit=True, color='gray', linestyle='--', linewidth=0.8)
 
         self.fig.canvas.draw()

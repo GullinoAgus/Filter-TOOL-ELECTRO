@@ -110,6 +110,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.FORadio = QtWidgets.QRadioButton(self.groupBox)
+        self.FORadio.setChecked(True)
         self.FORadio.setObjectName("FORadio")
         self.horizontalLayout.addWidget(self.FORadio)
         self.SORadio = QtWidgets.QRadioButton(self.groupBox)
