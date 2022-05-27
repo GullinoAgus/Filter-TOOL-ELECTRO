@@ -1,12 +1,12 @@
 import io
-import sys
+import sys, logging
 import tokenize
 
 import numpy as np
 import sympy as sp
 from PyQt6 import QtWidgets, QtGui
 from scipy import signal
-from sympy.parsing.sympy_parser import parse_expr
+from sympy.parsing.sympy_parser import parse_expr, T
 
 import plotWidget as pw
 from Filters import FirstOrder
@@ -44,32 +44,40 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
             tupla = sys.exc_info()
-            print(tupla[1])
+            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
             pass
         except NameError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
+            tupla = sys.exc_info()
+            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
             pass
         except AttributeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
+            tupla = sys.exc_info()
+            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
             pass
         except TypeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
             tupla = sys.exc_info()
-            print(tupla)
+            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
             pass
         except tokenize.TokenError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
+            tupla = sys.exc_info()
+            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
             pass
         except SyntaxError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
+            tupla = sys.exc_info()
+            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
             pass
         except:
             tupla = sys.exc_info()
-            print(tupla[1])
+            logging.critical("Error no capturado:", tupla[0], "\n", tupla[1], "\n", tupla[2])
 
     def buildFilter(self):  # TODO arreglar cuando la interfaz este completa
         if self.FORadio.isChecked():
@@ -81,9 +89,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 case 'All Pass':
                     return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
                 case 'Create new filter':  # TODO terminar Create new filter de primer orden
-                    print('TODO')
+                    logging.debug('TODO')
                 case _:
-                    print('No es por ahi')
+                    logging.debug('ERROR CASO DEFAULT DE buildFilter EN FIRST ORDER')
         elif self.SORadio.isChecked():
             match self.SOComboBox.currentText():  # TODO terminar matchcase de segundo orden
                 case 'Low Pass':
@@ -101,9 +109,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 case 'High-Pass Notch':
                     return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
                 case 'Create new filter':
-                    print('TODO')
+                    logging.debug('TODO')
                 case _:
-                    print('No es por ahi')
+                    logging.debug('ERROR CASO DEFAULT DE buildFilter EN SECOND ORDER')
 
     def buildInput(self):  # TODO arreglar cuando la interfaz este completa
         points = np.linspace(0, 1, 1000, endpoint=True)
@@ -115,7 +123,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             case 'Cos':
                 inputsignalpoints = float(self.AInputSignalLineEdit.text()) * np.cos(points * 4 * np.pi)
             case 'Step':
-                inputsignalpoints = [1 for i in points]
+                inputsignalpoints = [float(self.AInputSignalLineEdit.text()) for i in points]
             case 'Periodic Pulse':
                 inputsignalpoints = float(self.AInputSignalLineEdit.text()) * (signal.square(points * 4 * np.pi) - 0.5)
             case 'Triangle Periodic Pulse':
@@ -126,17 +134,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 inputsignalpoints = f(points4expr)
             case 'Other':
                 t = sp.Symbol('t', real=True)
-                expr = parse_expr(self.correctExpression(self.AInputSignalLineEdit.text()), local_dict={'t': t})
-                bytsitos = io.BytesIO()
-                sp.preview(expr, output='png', viewer='BytesIO', outputbuffer=bytsitos)
-                bytsitos.seek(0)
-                qimagen = QtGui.QImage.fromData(bytsitos.read(), 'png')
-                pixmapa = QtGui.QPixmap.fromImage(qimagen)
-                self.labelforeq.setPixmap(pixmapa)
+                expr = parse_expr(self.correctExpression(self.AInputSignalLineEdit.text()), local_dict={'t': t}, transformations=T[:])
+                
+                try:
+                    bytsitos = io.BytesIO()
+                    sp.preview(expr, output='png', viewer='BytesIO', outputbuffer=bytsitos)
+                    bytsitos.seek(0)
+                    qimagen = QtGui.QImage.fromData(bytsitos.read(), 'png')
+                    pixmapa = QtGui.QPixmap.fromImage(qimagen)
+                    self.labelforeq.setPixmap(pixmapa)
+                except:
+                    self.labelforeq.setText('Error, you may not\n have latex installed')
+                    
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
             case _:
-                print('NADA')
+                logging.error('CASO DEFAULT EN buildInput')
 
         return points * 2 / float(self.FInputSignalLineEdit.text()), inputsignalpoints
 
@@ -151,7 +164,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def Prueba(self):
-        print("Probando")
+        logging.debug("Probando")
 
     def FORadioButtonActive(self, state):
         if state == True:
@@ -162,7 +175,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.FilterTypeStackedWidget.setCurrentIndex(1)
 
     def CurrFilterComboBox(self, index):
-        print(index)
+        logging.debug(index)
 
     def CurrInputComboBox(self, index):
-        print(index)
+        logging.debug(index)
