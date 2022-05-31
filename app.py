@@ -16,6 +16,7 @@ from UI import Ui_MainWindow
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        sp.init_printing()
         self.setupUi(self)
         self.Bode = pw.BodePlot(parent=self.BodePlotBox)
         self.InOut = pw.InOutPlot(parent=self.InputAndOutputBox)
@@ -137,12 +138,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 expr = parse_expr(self.correctExpression(self.AInputSignalLineEdit.text()), local_dict={'t': t}, transformations=T[:])
                 
                 try:
-                    bytsitos = io.BytesIO()
-                    sp.preview(expr, output='png', viewer='BytesIO', outputbuffer=bytsitos)
-                    bytsitos.seek(0)
-                    qimagen = QtGui.QImage.fromData(bytsitos.read(), 'png')
-                    pixmapa = QtGui.QPixmap.fromImage(qimagen)
-                    self.labelforeq.setPixmap(pixmapa)
+                    tex_expr_raw = io.BytesIO()
+                    sp.preview(expr, output='png', viewer='BytesIO', outputbuffer=tex_expr_raw)
+                    tex_expr_raw.seek(0)
+                    tex_expr_qimage = QtGui.QImage.fromData(tex_expr_raw.read(), 'png')
+                    tex_expr_pixmap = QtGui.QPixmap.fromImage(tex_expr_qimage)
+                    self.labelforeq.setPixmap(tex_expr_pixmap)
                 except:
                     self.labelforeq.setText('Error, you may not\n have latex installed')
                     
