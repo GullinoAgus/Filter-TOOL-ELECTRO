@@ -5,7 +5,7 @@ from scipy import signal
 class LowPass(VirtualFilter):
     def __init__(self, w0, k=1):
         super(LowPass, self).__init__()
-        self.transferFunc = signal.ZerosPolesGain([], [-w0], w0)  # Zeros Polos Ganancia
+        self.transferFunc = signal.ZerosPolesGain([], [-w0], w0*k)  # Zeros Polos Ganancia
 
 
 class HighPass(VirtualFilter):

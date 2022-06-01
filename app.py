@@ -9,7 +9,7 @@ from scipy import signal
 from sympy.parsing.sympy_parser import parse_expr, T
 
 import plotWidget as pw
-from Filters import FirstOrder
+from Filters import FirstOrder, SecondOrder
 from UI import Ui_MainWindow
 
 
@@ -96,7 +96,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         elif self.SORadio.isChecked():
             match self.SOComboBox.currentText():  # TODO terminar matchcase de segundo orden
                 case 'Low Pass':
-                    return FirstOrder.LowPass(float(self.PFSettingsLineEdit.text()))
+                    return  SecondOrder.LowPass()
                 case 'High Pass':
                     return FirstOrder.HighPass(float(self.PFSettingsLineEdit.text()))
                 case 'All Pass':
