@@ -29,18 +29,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.InputAndOutputBox.layout().addWidget(self.InOut)
         self.labelforeq = QtWidgets.QLabel()
         self.gridLayout_6.addWidget(self.labelforeq, 2,1)
+        self.workingfilter
 
     def EnterTheMatrix(self):
 
         try:
-            filtro = self.buildFilter()
-            w, a, p = filtro.getbode()
+            self.workingfilter = self.buildFilter()
+            w, a, p = self.workingfilter.getbode()
             self.Bode.plot(w, a, p)
-            poles, zeros = filtro.getpolesandzeros()
+            poles, zeros = self.workingfilter.getpolesandzeros()
             self.PolesZeros.plot(poles, zeros)
             t, inputsignal = self.buildInput()
 
-            time, output = filtro.getoutputfrominput(t, inputsignal)
+            time, output = self.workingfilter.getoutputfrominput(t, inputsignal)
             self.InOut.plot(time, inputsignal, output)
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
