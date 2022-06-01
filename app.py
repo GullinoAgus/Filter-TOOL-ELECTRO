@@ -84,18 +84,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.FORadio.isChecked():
             match self.FOComboBox.currentText():
                 case 'Low Pass':
-                    return FirstOrder.LowPass(float(self.PFSettingsLineEdit.text()))
+                    return FirstOrder.LowPass(self.CFSettingsDoubleSpinBox.value(),
+                                              self.GainSettingsDoubleSpinBox.value())
                 case 'High Pass':
-                    return FirstOrder.HighPass(float(self.PFSettingsLineEdit.text()))
+                    return FirstOrder.HighPass(self.CFSettingsDoubleSpinBox.value(),
+                                               self.GainSettingsDoubleSpinBox.value())
                 case 'All Pass':
-                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
-                case 'Create new filter':  # TODO terminar Create new filter de primer orden
-                    logging.debug('TODO')
+                    return FirstOrder.AllPass(self.CFSettingsDoubleSpinBox.value(),
+                                              self.GainSettingsDoubleSpinBox.value())
+                case 'Create new filter':
+                    return FirstOrder.ArbitraryFO(self.PFAFSettingsDoubleSpinBox.value(),
+                                                  self.ZFAFSettingsDoubleSpinBox.value(),
+                                                  self.GainSettingsDoubleSpinBox.value())
                 case _:
                     logging.debug('ERROR CASO DEFAULT DE buildFilter EN FIRST ORDER')
         elif self.SORadio.isChecked():
             match self.SOComboBox.currentText():  # TODO terminar matchcase de segundo orden
                 case 'Low Pass':
+                    if self.
                     return  SecondOrder.LowPass()
                 case 'High Pass':
                     return FirstOrder.HighPass(float(self.PFSettingsLineEdit.text()))
@@ -119,23 +125,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         points4expr = np.linspace(0, 1, 500, endpoint=True)
         points4expr = np.append(points4expr, points4expr)
         inputsignalpoints = None
+        timepoints = points
 
         match self.ISComboBox.currentText():
             case 'Cos':
-                inputsignalpoints = float(self.AInputSignalLineEdit.text()) * np.cos(points * 4 * np.pi)
+                inputsignalpoints = self.AInputSignalDoubleSpinBox2.value() * np.cos(points * 4 * np.pi)
+                timepoints = points * 2 / self.FInputSignalDoubleSpinBox2.value()
             case 'Step':
-                inputsignalpoints = [float(self.AInputSignalLineEdit.text()) for i in points]
+                inputsignalpoints = [self.AInputSignalDoubleSpinBox1.value() for i in points]
             case 'Periodic Pulse':
-                inputsignalpoints = float(self.AInputSignalLineEdit.text()) * (signal.square(points * 4 * np.pi) - 0.5)
+                inputsignalpoints = self.AInputSignalDoubleSpinBox3.value() * \
+                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3.value()) - 0.5)
+                timepoints = points * 2 / self.FInputSignalDoubleSpinBox3.value()
             case 'Triangle Periodic Pulse':
                 t = sp.Symbol('t', real=True)
-                expr = float(self.AInputSignalLineEdit.text()) * sp.Piecewise((-t + 1 / 4, t <= 1 / 2),
+                expr = self.AInputSignalDoubleSpinBox3.value() * sp.Piecewise((-t + 1 / 4, t <= 1 / 2),
                                                                               (t - 3 / 4, t > 1 / 2))
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
+                timepoints = points * 2 / self.FInputSignalDoubleSpinBox3.value()
             case 'Other':
                 t = sp.Symbol('t', real=True)
-                expr = parse_expr(self.correctExpression(self.AInputSignalLineEdit.text()), local_dict={'t': t}, transformations=T[:])
+                expr = parse_expr(self.correctExpression(self.FuncInputSignalTextEdit4.text().replace('\n', '')),
+                                  local_dict={'t': t}, transformations=T[:])
                 
                 try:
                     tex_expr_raw = io.BytesIO()
@@ -152,7 +164,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             case _:
                 logging.error('CASO DEFAULT EN buildInput')
 
-        return points * 2 / float(self.FInputSignalLineEdit.text()), inputsignalpoints
+        return timepoints, inputsignalpoints
 
     def correctExpression(self, expr: str):
         validfuncs = sp.functions.__all__
