@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1051</width>
+    <width>1050</width>
     <height>932</height>
    </rect>
   </property>
@@ -29,445 +29,571 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
-          </property>
-          <item>
-           <widget class="QGroupBox" name="groupBox">
-            <property name="maximumSize">
-             <size>
-              <width>400</width>
-              <height>400</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Settings</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_5">
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout">
-                 <item>
-                  <widget class="QRadioButton" name="FORadio">
-                   <property name="text">
-                    <string>First Order</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QRadioButton" name="SORadio">
-                   <property name="text">
-                    <string>Second Order</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QStackedWidget" name="FilterTypeStackedWidget">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777213</height>
-                  </size>
-                 </property>
-                 <property name="currentIndex">
-                  <number>1</number>
-                 </property>
-                 <widget class="QWidget" name="page_5">
-                  <layout class="QGridLayout" name="gridLayout_7">
-                   <item row="0" column="0">
-                    <widget class="QComboBox" name="FOComboBox">
-                     <item>
-                      <property name="text">
-                       <string>Low Pass</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>High Pass</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>All Pass</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Create new filter</string>
-                      </property>
-                     </item>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                 <widget class="QWidget" name="page_6">
-                  <layout class="QGridLayout" name="gridLayout_8">
-                   <item row="0" column="0">
-                    <widget class="QComboBox" name="SOComboBox">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <item>
-                      <property name="text">
-                       <string>Low Pass</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>High Pass</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>All Pass</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Band Pass</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Notch</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Low-Pass Notch</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>High-Pass Notch</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Create new filter</string>
-                      </property>
-                     </item>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </widget>
-               </item>
-               <item>
-                <widget class="QStackedWidget" name="FilterInfoStackedWidget">
-                 <property name="currentIndex">
-                  <number>1</number>
-                 </property>
-                 <widget class="QWidget" name="page_2">
-                  <layout class="QGridLayout" name="gridLayout_9">
-                   <item row="0" column="1">
-                    <widget class="QDoubleSpinBox" name="CFSettingsDoubleSpinBox"/>
-                   </item>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_6">
-                     <property name="text">
-                      <string>Cut Frecuency</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                 <widget class="QWidget" name="page_8">
-                  <layout class="QGridLayout" name="gridLayout_10">
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_8">
-                     <property name="text">
-                      <string>Pole Frecuency</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_9">
-                     <property name="text">
-                      <string>Zero Frecuency</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QDoubleSpinBox" name="ZFAFSettingsDoubleSpinBox"/>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QDoubleSpinBox" name="PFAFSettingsDoubleSpinBox"/>
-                   </item>
-                  </layout>
-                 </widget>
-                 <widget class="QWidget" name="page">
-                  <layout class="QGridLayout" name="gridLayout">
-                   <item row="0" column="1">
-                    <widget class="QDoubleSpinBox" name="PFSettingsLineEdit2_3"/>
-                   </item>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_17">
-                     <property name="text">
-                      <string>Resonant Frecuency</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QDoubleSpinBox" name="doubleSpinBox_7"/>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_10">
-                     <property name="text">
-                      <string>ξ (Xi)</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="0">
-              <layout class="QGridLayout" name="gridLayout_14">
-               <item row="0" column="1">
-                <widget class="QDoubleSpinBox" name="GainSettingsDoubleSpinBox"/>
-               </item>
-               <item row="0" column="0">
-                <widget class="QRadioButton" name="radioButton_2">
-                 <property name="text">
-                  <string>Band pass gain</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QRadioButton" name="radioButton">
-                 <property name="text">
-                  <string>Max gain</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>400</width>
-              <height>400</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Input Signal</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_5">
-             <item row="0" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <item>
-                <widget class="QComboBox" name="ISComboBox">
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>Cos</string>
+         <widget class="QFrame" name="verticalFrame_2">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <item>
+            <widget class="QGroupBox" name="groupBox">
+             <property name="maximumSize">
+              <size>
+               <width>400</width>
+               <height>400</height>
+              </size>
+             </property>
+             <property name="title">
+              <string>Settings</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="0" column="0">
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout">
+                  <item>
+                   <widget class="QRadioButton" name="FORadio">
+                    <property name="text">
+                     <string>First Order</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="SORadio">
+                    <property name="text">
+                     <string>Second Order</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QStackedWidget" name="FilterTypeStackedWidget">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Step</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777213</height>
+                   </size>
                   </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Periodic Pulse</string>
+                  <property name="currentIndex">
+                   <number>0</number>
                   </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Triangle Periodic Pulse</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Other</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>30</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="0">
-              <layout class="QGridLayout" name="gridLayout_4">
-               <item row="0" column="0">
-                <widget class="QStackedWidget" name="InputTypeStackedWidget">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="currentIndex">
-                  <number>0</number>
-                 </property>
-                 <widget class="QWidget" name="page_9">
-                  <layout class="QHBoxLayout" name="horizontalLayout_4">
-                   <item>
-                    <widget class="QLabel" name="label_13">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="text">
-                      <string>Amplitude</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox1"/>
-                   </item>
-                  </layout>
-                 </widget>
-                 <widget class="QWidget" name="page_3">
-                  <layout class="QVBoxLayout" name="verticalLayout_2">
-                   <item>
-                    <layout class="QGridLayout" name="gridLayout_6">
-                     <item row="0" column="0">
-                      <widget class="QLabel" name="label_4">
+                  <widget class="QWidget" name="page_5">
+                   <layout class="QGridLayout" name="gridLayout_7">
+                    <item row="0" column="0">
+                     <widget class="QComboBox" name="FOComboBox">
+                      <item>
                        <property name="text">
-                        <string>Frecuency</string>
+                        <string>Low Pass</string>
                        </property>
-                      </widget>
-                     </item>
-                     <item row="1" column="0">
-                      <widget class="QLabel" name="label_5">
+                      </item>
+                      <item>
                        <property name="text">
-                        <string>Amplitude</string>
+                        <string>High Pass</string>
                        </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>All Pass</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Create new filter</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_6">
+                   <layout class="QGridLayout" name="gridLayout_8">
+                    <item row="0" column="0">
+                     <widget class="QComboBox" name="SOComboBox">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <item>
+                       <property name="text">
+                        <string>Low Pass</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>High Pass</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>All Pass</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Band Pass</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Notch</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Low-Pass Notch</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>High-Pass Notch</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Create new filter</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QStackedWidget" name="FilterInfoStackedWidget">
+                  <property name="currentIndex">
+                   <number>0</number>
+                  </property>
+                  <widget class="QWidget" name="page_2">
+                   <layout class="QGridLayout" name="gridLayout_9">
+                    <item row="0" column="1">
+                     <widget class="QDoubleSpinBox" name="CFSettingsDoubleSpinBox"/>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_6">
+                      <property name="text">
+                       <string>Cut Frecuency</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_8">
+                   <layout class="QGridLayout" name="gridLayout_10">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_8">
+                      <property name="text">
+                       <string>Pole Frecuency</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_9">
+                      <property name="text">
+                       <string>Zero Frecuency</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QDoubleSpinBox" name="ZFAFSettingsDoubleSpinBox"/>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QDoubleSpinBox" name="PFAFSettingsDoubleSpinBox"/>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page">
+                   <layout class="QGridLayout" name="gridLayout">
+                    <item row="0" column="1">
+                     <widget class="QDoubleSpinBox" name="PFSettingsLineEdit2_3"/>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_17">
+                      <property name="text">
+                       <string>Resonant Frecuency</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_7"/>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_10">
+                      <property name="text">
+                       <string>ξ (Xi)</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_7">
+                   <layout class="QGridLayout" name="gridLayout_13">
+                    <item row="6" column="2">
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QLabel" name="label_2">
+                      <property name="text">
+                       <string>N(s)</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="8" column="2">
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+                    </item>
+                    <item row="3" column="2">
+                     <widget class="QStackedWidget" name="stackedWidget">
+                      <property name="currentIndex">
+                       <number>0</number>
+                      </property>
+                      <widget class="QWidget" name="page_11">
+                       <layout class="QGridLayout" name="gridLayout_19">
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_18">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="text">
+                           <string>ω</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QLabel" name="label_19">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="text">
+                           <string>ξ</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="1">
+                         <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+                        </item>
+                       </layout>
                       </widget>
-                     </item>
-                     <item row="1" column="1">
-                      <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox2"/>
-                     </item>
-                     <item row="0" column="1">
-                      <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox2"/>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
+                      <widget class="QWidget" name="page_12">
+                       <layout class="QGridLayout" name="gridLayout_20">
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_20">
+                          <property name="text">
+                           <string>TextLabel</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
+                        </item>
+                       </layout>
+                      </widget>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QComboBox" name="comboBox">
+                      <item>
+                       <property name="text">
+                        <string>2nd Order</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>1st Order</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item row="6" column="0">
+                     <widget class="QLabel" name="label">
+                      <property name="text">
+                       <string>D(s)</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="1">
+                     <widget class="QLabel" name="label_7">
+                      <property name="text">
+                       <string>ω</string>
+                      </property>
+                      <property name="textFormat">
+                       <enum>Qt::AutoText</enum>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="8" column="1">
+                     <widget class="QLabel" name="label_3">
+                      <property name="text">
+                       <string>ξ</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
                  </widget>
-                 <widget class="QWidget" name="page_10">
-                  <layout class="QGridLayout" name="gridLayout_12">
-                   <item row="2" column="0">
-                    <widget class="QLabel" name="label_16">
-                     <property name="text">
-                      <string>Duty Cycle</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_15">
-                     <property name="text">
-                      <string>Frecuency</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_14">
-                     <property name="text">
-                      <string>Amplitude</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox3"/>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox3"/>
-                   </item>
-                   <item row="2" column="1">
-                    <widget class="QDoubleSpinBox" name="DCInputSignalDoubleSpinBox3"/>
-                   </item>
-                  </layout>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="0">
+               <layout class="QGridLayout" name="gridLayout_14">
+                <item row="0" column="1">
+                 <widget class="QDoubleSpinBox" name="GainSettingsDoubleSpinBox"/>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QRadioButton" name="radioButton_2">
+                  <property name="text">
+                   <string>Band pass gain</string>
+                  </property>
                  </widget>
-                 <widget class="QWidget" name="page_4">
-                  <layout class="QGridLayout" name="gridLayout_11">
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_11">
-                     <property name="text">
-                      <string>f(t)</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_12">
-                     <property name="text">
-                      <string>Frecuency</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QTextEdit" name="FuncInputSignalTextEdit4"/>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox4"/>
-                   </item>
-                  </layout>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QRadioButton" name="radioButton">
+                  <property name="text">
+                   <string>Max gain</string>
+                  </property>
                  </widget>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="2" column="0">
-              <widget class="QPushButton" name="pushButton">
-               <property name="text">
-                <string>Enter the matix</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>400</width>
+               <height>400</height>
+              </size>
+             </property>
+             <property name="title">
+              <string>Input Signal</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QComboBox" name="ISComboBox">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Cos</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Step</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Periodic Pulse</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Triangle Periodic Pulse</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Other</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>30</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="0">
+               <layout class="QGridLayout" name="gridLayout_4">
+                <item row="0" column="0">
+                 <widget class="QStackedWidget" name="InputTypeStackedWidget">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="currentIndex">
+                   <number>0</number>
+                  </property>
+                  <widget class="QWidget" name="page_9">
+                   <layout class="QHBoxLayout" name="horizontalLayout_4">
+                    <item>
+                     <widget class="QLabel" name="label_13">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>Amplitude</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox1"/>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_3">
+                   <layout class="QVBoxLayout" name="verticalLayout_2">
+                    <item>
+                     <layout class="QGridLayout" name="gridLayout_6">
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="label_4">
+                        <property name="text">
+                         <string>Frecuency</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="label_5">
+                        <property name="text">
+                         <string>Amplitude</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox2"/>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox2"/>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_10">
+                   <layout class="QGridLayout" name="gridLayout_12">
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="label_16">
+                      <property name="text">
+                       <string>Duty Cycle</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_15">
+                      <property name="text">
+                       <string>Frecuency</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_14">
+                      <property name="text">
+                       <string>Amplitude</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox3"/>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox3"/>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QDoubleSpinBox" name="DCInputSignalDoubleSpinBox3"/>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="page_4">
+                   <layout class="QGridLayout" name="gridLayout_11">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_11">
+                      <property name="text">
+                       <string>f(t)</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_12">
+                      <property name="text">
+                       <string>Frecuency</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QTextEdit" name="FuncInputSignalTextEdit4"/>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox4"/>
+                    </item>
+                   </layout>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string>Enter the matix</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -552,82 +678,18 @@
  <resources/>
  <connections>
   <connection>
-   <sender>FORadio</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>FORadioButtonActive(bool)</slot>
+   <sender>comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>stackedWidget</receiver>
+   <slot>setCurrentIndex(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>82</y>
+     <x>119</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
-     <x>4</x>
-     <y>70</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>SORadio</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>SORadioButtonActive(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>262</x>
-     <y>82</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>104</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>FOComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>CurrFilterComboBox(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>150</x>
-     <y>118</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1</x>
-     <y>147</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ISComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>CurrInputComboBox(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>118</x>
-     <y>367</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>441</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>EnterTheMatrix()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>134</x>
-     <y>637</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>674</y>
+     <x>162</x>
+     <y>248</y>
     </hint>
    </hints>
   </connection>
