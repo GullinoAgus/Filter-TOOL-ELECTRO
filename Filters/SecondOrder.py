@@ -34,6 +34,8 @@ class NotchPass(VirtualFilter):
 
 
 class ArbitraryFilter(VirtualFilter):
-    def __init__(self, w0=np.inf, xi=0, num=[1], k=1):
+    def __init__(self, w0=np.inf, xi=0, num=None, k=1):
         super().__init__()
+        if num is None:
+            num = [1]
         self.transferFunc = signal.TransferFunction(num * k, [1 / w0 ** 2, 2 * xi / w0, 1])

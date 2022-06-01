@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1050</width>
+    <width>1034</width>
     <height>932</height>
    </rect>
   </property>
@@ -58,6 +58,12 @@
                     <property name="checked">
                      <bool>true</bool>
                     </property>
+                    <property name="autoExclusive">
+                     <bool>true</bool>
+                    </property>
+                    <attribute name="buttonGroup">
+                     <string notr="true">buttonGroup</string>
+                    </attribute>
                    </widget>
                   </item>
                   <item>
@@ -65,6 +71,12 @@
                     <property name="text">
                      <string>Second Order</string>
                     </property>
+                    <property name="autoExclusive">
+                     <bool>true</bool>
+                    </property>
+                    <attribute name="buttonGroup">
+                     <string notr="true">buttonGroup</string>
+                    </attribute>
                    </widget>
                   </item>
                  </layout>
@@ -151,16 +163,6 @@
                       </item>
                       <item>
                        <property name="text">
-                        <string>Low-Pass Notch</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>High-Pass Notch</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
                         <string>Create new filter</string>
                        </property>
                       </item>
@@ -178,7 +180,11 @@
                   <widget class="QWidget" name="page_2">
                    <layout class="QGridLayout" name="gridLayout_9">
                     <item row="0" column="1">
-                     <widget class="QDoubleSpinBox" name="CFSettingsDoubleSpinBox"/>
+                     <widget class="QDoubleSpinBox" name="CFSettingsDoubleSpinBox">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_6">
@@ -206,17 +212,29 @@
                      </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QDoubleSpinBox" name="ZFAFSettingsDoubleSpinBox"/>
+                     <widget class="QDoubleSpinBox" name="ZFAFSettingsDoubleSpinBox">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QDoubleSpinBox" name="PFAFSettingsDoubleSpinBox"/>
+                     <widget class="QDoubleSpinBox" name="PFAFSettingsDoubleSpinBox">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
                   <widget class="QWidget" name="page">
                    <layout class="QGridLayout" name="gridLayout">
                     <item row="0" column="1">
-                     <widget class="QDoubleSpinBox" name="PFSettingsLineEdit2_3"/>
+                     <widget class="QDoubleSpinBox" name="RFSettingsDoubleSpinBox3">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_17">
@@ -226,138 +244,188 @@
                      </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QDoubleSpinBox" name="doubleSpinBox_7"/>
+                     <widget class="QDoubleSpinBox" name="XiSettingsDoubleSpinBox3">
+                      <property name="decimals">
+                       <number>6</number>
+                      </property>
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                     <item row="1" column="0">
                      <widget class="QLabel" name="label_10">
                       <property name="text">
-                       <string>ξ (Xi)</string>
+                       <string>ξ</string>
                       </property>
                      </widget>
                     </item>
                    </layout>
                   </widget>
                   <widget class="QWidget" name="page_7">
-                   <layout class="QGridLayout" name="gridLayout_13">
-                    <item row="6" column="2">
-                     <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="label_2">
-                      <property name="text">
-                       <string>N(s)</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="8" column="2">
-                     <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
-                    </item>
-                    <item row="3" column="2">
-                     <widget class="QStackedWidget" name="stackedWidget">
-                      <property name="currentIndex">
-                       <number>0</number>
-                      </property>
-                      <widget class="QWidget" name="page_11">
-                       <layout class="QGridLayout" name="gridLayout_19">
-                        <item row="0" column="0">
-                         <widget class="QLabel" name="label_18">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_6">
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout">
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_7">
+                        <item>
+                         <widget class="QLabel" name="label_2">
                           <property name="text">
-                           <string>ω</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignCenter</set>
+                           <string>N(s)</string>
                           </property>
                          </widget>
                         </item>
-                        <item row="0" column="1">
-                         <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
-                        </item>
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="label_19">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>ξ</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignCenter</set>
-                          </property>
+                        <item>
+                         <widget class="QComboBox" name="NumeratorComboBox">
+                          <item>
+                           <property name="text">
+                            <string>1st Order</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>2nd Order</string>
+                           </property>
+                          </item>
                          </widget>
                         </item>
-                        <item row="1" column="1">
-                         <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+                        <item>
+                         <widget class="QStackedWidget" name="NumeratorComboBoxStackedWidget">
+                          <property name="currentIndex">
+                           <number>0</number>
+                          </property>
+                          <widget class="QWidget" name="page_12">
+                           <layout class="QGridLayout" name="gridLayout_21">
+                            <item row="0" column="0">
+                             <layout class="QGridLayout" name="gridLayout_20">
+                              <item row="0" column="0">
+                               <widget class="QLabel" name="label_20">
+                                <property name="text">
+                                 <string>ω</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item row="0" column="1">
+                               <widget class="QDoubleSpinBox" name="WSettingsDoubleSpinBox41">
+                                <property name="maximum">
+                                 <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </item>
+                           </layout>
+                          </widget>
+                          <widget class="QWidget" name="page_11">
+                           <layout class="QGridLayout" name="gridLayout_19">
+                            <item row="0" column="0">
+                             <widget class="QLabel" name="label_18">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="text">
+                               <string>ω</string>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="1" column="0">
+                             <widget class="QLabel" name="label_19">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="text">
+                               <string>ξ</string>
+                              </property>
+                              <property name="alignment">
+                               <set>Qt::AlignCenter</set>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="0" column="1">
+                             <widget class="QDoubleSpinBox" name="WSettingsDoubleSpinBox42">
+                              <property name="maximum">
+                               <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="1" column="1">
+                             <widget class="QDoubleSpinBox" name="XiSettingsDoubleSpinBox42">
+                              <property name="maximum">
+                               <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </widget>
                         </item>
                        </layout>
-                      </widget>
-                      <widget class="QWidget" name="page_12">
-                       <layout class="QGridLayout" name="gridLayout_20">
-                        <item row="0" column="0">
-                         <widget class="QLabel" name="label_20">
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_8">
+                        <item>
+                         <widget class="QLabel" name="label">
                           <property name="text">
-                           <string>TextLabel</string>
+                           <string>D(s)</string>
                           </property>
                          </widget>
                         </item>
-                        <item row="0" column="1">
-                         <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
+                        <item>
+                         <layout class="QGridLayout" name="gridLayout_13">
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="label_7">
+                            <property name="text">
+                             <string>ω</string>
+                            </property>
+                            <property name="textFormat">
+                             <enum>Qt::AutoText</enum>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
+                           <widget class="QDoubleSpinBox" name="WSettingsDoubleSpinBox43">
+                            <property name="maximum">
+                             <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="label_3">
+                            <property name="text">
+                             <string>ξ</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="1">
+                           <widget class="QDoubleSpinBox" name="XiSettingsDoubleSpinBox43">
+                            <property name="maximum">
+                             <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
                         </item>
                        </layout>
-                      </widget>
-                     </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QComboBox" name="comboBox">
-                      <item>
-                       <property name="text">
-                        <string>2nd Order</string>
-                       </property>
                       </item>
-                      <item>
-                       <property name="text">
-                        <string>1st Order</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                    <item row="6" column="0">
-                     <widget class="QLabel" name="label">
-                      <property name="text">
-                       <string>D(s)</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="6" column="1">
-                     <widget class="QLabel" name="label_7">
-                      <property name="text">
-                       <string>ω</string>
-                      </property>
-                      <property name="textFormat">
-                       <enum>Qt::AutoText</enum>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="8" column="1">
-                     <widget class="QLabel" name="label_3">
-                      <property name="text">
-                       <string>ξ</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
+                     </layout>
                     </item>
                    </layout>
                   </widget>
@@ -368,23 +436,52 @@
               <item row="1" column="0">
                <layout class="QGridLayout" name="gridLayout_14">
                 <item row="0" column="1">
-                 <widget class="QDoubleSpinBox" name="GainSettingsDoubleSpinBox"/>
+                 <widget class="QDoubleSpinBox" name="GainSettingsDoubleSpinBox">
+                  <property name="minimum">
+                   <double>-10000000000000000139372116959414099130712064.000000000000000</double>
+                  </property>
+                  <property name="maximum">
+                   <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                  </property>
+                 </widget>
                 </item>
                 <item row="0" column="0">
-                 <widget class="QRadioButton" name="radioButton_2">
+                 <widget class="QRadioButton" name="BPGRadioButton">
                   <property name="text">
                    <string>Band pass gain</string>
                   </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                  <property name="autoExclusive">
+                   <bool>true</bool>
+                  </property>
+                  <attribute name="buttonGroup">
+                   <string notr="true">buttonGroup_2</string>
+                  </attribute>
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QRadioButton" name="radioButton">
+                 <widget class="QRadioButton" name="MGRadioButton">
                   <property name="text">
                    <string>Max gain</string>
                   </property>
+                  <property name="autoExclusive">
+                   <bool>true</bool>
+                  </property>
+                  <attribute name="buttonGroup">
+                   <string notr="true">buttonGroup_2</string>
+                  </attribute>
                  </widget>
                 </item>
                </layout>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="PlotButton">
+                <property name="text">
+                 <string>Plot</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -439,6 +536,11 @@
                   </item>
                   <item>
                    <property name="text">
+                    <string>δ Dirac</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
                     <string>Other</string>
                    </property>
                   </item>
@@ -470,7 +572,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="page_9">
                    <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -488,7 +590,11 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox1"/>
+                     <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox1">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -511,10 +617,18 @@
                        </widget>
                       </item>
                       <item row="1" column="1">
-                       <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox2"/>
+                       <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox2">
+                        <property name="maximum">
+                         <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                       <item row="0" column="1">
-                       <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox2"/>
+                       <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox2">
+                        <property name="maximum">
+                         <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </item>
@@ -544,13 +658,25 @@
                      </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox3"/>
+                     <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox3">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox3"/>
+                     <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox3">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                     <item row="2" column="1">
-                     <widget class="QDoubleSpinBox" name="DCInputSignalDoubleSpinBox3"/>
+                     <widget class="QDoubleSpinBox" name="DCInputSignalDoubleSpinBox3">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -574,10 +700,15 @@
                      <widget class="QTextEdit" name="FuncInputSignalTextEdit4"/>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox4"/>
+                     <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox4">
+                      <property name="maximum">
+                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
+                  <widget class="QWidget" name="page_13"/>
                  </widget>
                 </item>
                </layout>
@@ -678,18 +809,130 @@
  <resources/>
  <connections>
   <connection>
-   <sender>comboBox</sender>
+   <sender>NumeratorComboBox</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>stackedWidget</receiver>
+   <receiver>NumeratorComboBoxStackedWidget</receiver>
    <slot>setCurrentIndex(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>248</y>
+     <x>139</x>
+     <y>186</y>
     </hint>
     <hint type="destinationlabel">
-     <x>162</x>
-     <y>248</y>
+     <x>139</x>
+     <y>186</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SORadio</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>SORadioButtonActive(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>269</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>FOComboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>CurrFOFilterComboBox(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>256</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SOComboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>CurrSOFilterComboBox(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>231</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ISComboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>CurrInputSignalComboBox(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>85</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>EnterTheMatrix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>864</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>886</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PlotButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>PlotBodeAndPoles()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>443</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>252</x>
+     <y>451</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>FORadio</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>FORadioButtonActive(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>105</x>
+     <y>109</y>
     </hint>
    </hints>
   </connection>
@@ -697,8 +940,14 @@
  <slots>
   <slot>FORadioButtonActive(bool)</slot>
   <slot>SORadioButtonActive(bool)</slot>
-  <slot>CurrFilterComboBox(int)</slot>
-  <slot>CurrInputComboBox(int)</slot>
+  <slot>CurrFOFilterComboBox(int)</slot>
+  <slot>CurrInputSignalComboBox(int)</slot>
   <slot>EnterTheMatrix()</slot>
+  <slot>CurrSOFilterComboBox(int)</slot>
+  <slot>PlotBodeAndPoles()</slot>
  </slots>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+ </buttongroups>
 </ui>

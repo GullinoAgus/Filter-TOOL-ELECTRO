@@ -3,7 +3,7 @@ import app
 
 
 def main():
-    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
+    logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
     aplicacion = app.QtWidgets.QApplication(sys.argv)
     ventana = app.MainWindow()
     ventana.show()
