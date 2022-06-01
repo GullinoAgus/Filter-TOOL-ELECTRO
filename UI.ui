@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1062</width>
-    <height>791</height>
+    <width>1554</width>
+    <height>932</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,10 +65,10 @@
                  </item>
                 </layout>
                </item>
-               <item alignment="Qt::AlignTop">
+               <item>
                 <widget class="QStackedWidget" name="FilterTypeStackedWidget">
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>1</number>
                  </property>
                  <widget class="QWidget" name="page_5">
                   <layout class="QGridLayout" name="gridLayout_7">
@@ -151,83 +151,25 @@
                <item>
                 <widget class="QStackedWidget" name="stackedWidget">
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>2</number>
                  </property>
-                 <widget class="QWidget" name="page">
-                  <layout class="QVBoxLayout" name="verticalLayout">
-                   <item>
-                    <layout class="QGridLayout" name="gridLayout">
-                     <item row="0" column="1">
-                      <widget class="QLineEdit" name="lineEdit"/>
-                     </item>
-                     <item row="1" column="1">
-                      <widget class="QLineEdit" name="lineEdit_2"/>
-                     </item>
-                     <item row="0" column="0">
-                      <widget class="QLabel" name="label">
-                       <property name="text">
-                        <string>Wo1</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="2" column="0">
-                      <widget class="QLabel" name="label_3">
-                       <property name="text">
-                        <string>Wo2</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="1" column="0">
-                      <widget class="QLabel" name="label_2">
-                       <property name="text">
-                        <string>Sigma1</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item row="2" column="1">
-                      <widget class="QLineEdit" name="lineEdit_3"/>
-                     </item>
-                     <item row="3" column="1">
-                      <widget class="QLineEdit" name="lineEdit_10"/>
-                     </item>
-                     <item row="3" column="0">
-                      <widget class="QLabel" name="label_10">
-                       <property name="text">
-                        <string>Sigma2</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </widget>
+                 <widget class="QWidget" name="page"/>
                  <widget class="QWidget" name="page_2">
                   <layout class="QGridLayout" name="gridLayout_9">
+                   <item row="0" column="1">
+                    <widget class="QDoubleSpinBox" name="CFSettingsDoubleSpinBox1"/>
+                   </item>
                    <item row="0" column="0">
                     <widget class="QLabel" name="label_6">
                      <property name="text">
-                      <string>Pole Frecuency</string>
+                      <string>Cut Frecuency</string>
                      </property>
                     </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QLineEdit" name="PFSettingsLineEdit"/>
                    </item>
                   </layout>
                  </widget>
                  <widget class="QWidget" name="page_7">
-                  <layout class="QHBoxLayout" name="horizontalLayout_2">
-                   <item>
-                    <widget class="QLabel" name="label_7">
-                     <property name="text">
-                      <string>Zero Frecuency</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="ZFSettingsLineEdit"/>
-                   </item>
-                  </layout>
+                  <layout class="QHBoxLayout" name="horizontalLayout_2"/>
                  </widget>
                  <widget class="QWidget" name="page_8">
                   <layout class="QGridLayout" name="gridLayout_10">
@@ -238,9 +180,6 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="0" column="1">
-                    <widget class="QLineEdit" name="PFSettingsLineEdit2"/>
-                   </item>
                    <item row="1" column="0">
                     <widget class="QLabel" name="label_9">
                      <property name="text">
@@ -249,10 +188,34 @@
                     </widget>
                    </item>
                    <item row="1" column="1">
-                    <widget class="QLineEdit" name="ZFSettingsLineEdit2"/>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_6"/>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QDoubleSpinBox" name="PFSettingsLineEdit2_2"/>
                    </item>
                   </layout>
                  </widget>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0">
+              <layout class="QGridLayout" name="gridLayout_14">
+               <item row="0" column="1">
+                <widget class="QDoubleSpinBox" name="GainSettingsDoubleSpinBox"/>
+               </item>
+               <item row="0" column="0">
+                <widget class="QRadioButton" name="radioButton_2">
+                 <property name="text">
+                  <string>Band pass gain</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QRadioButton" name="radioButton">
+                 <property name="text">
+                  <string>Max gain</string>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -329,7 +292,7 @@
                <item row="0" column="0">
                 <widget class="QStackedWidget" name="InputTypeStackedWidget">
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="page_9">
                   <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -341,7 +304,7 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="AInputSignalLineEdit_3"/>
+                    <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox1"/>
                    </item>
                   </layout>
                  </widget>
@@ -356,9 +319,6 @@
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="1">
-                      <widget class="QLineEdit" name="FInputSignalLineEdit"/>
-                     </item>
                      <item row="1" column="0">
                       <widget class="QLabel" name="label_5">
                        <property name="text">
@@ -367,7 +327,10 @@
                       </widget>
                      </item>
                      <item row="1" column="1">
-                      <widget class="QLineEdit" name="AInputSignalLineEdit"/>
+                      <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox2"/>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox2"/>
                      </item>
                     </layout>
                    </item>
@@ -375,15 +338,12 @@
                  </widget>
                  <widget class="QWidget" name="page_10">
                   <layout class="QGridLayout" name="gridLayout_12">
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="label_14">
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_16">
                      <property name="text">
-                      <string>Amplitude</string>
+                      <string>Duty Cycle</string>
                      </property>
                     </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QLineEdit" name="AInputSignalLineEdit_2"/>
                    </item>
                    <item row="1" column="0">
                     <widget class="QLabel" name="label_15">
@@ -392,18 +352,21 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="1" column="1">
-                    <widget class="QLineEdit" name="FInputSignalLineEdit_2"/>
-                   </item>
-                   <item row="2" column="0">
-                    <widget class="QLabel" name="label_16">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_14">
                      <property name="text">
-                      <string>Duty Cycle</string>
+                      <string>Amplitude</string>
                      </property>
                     </widget>
                    </item>
+                   <item row="0" column="1">
+                    <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox3"/>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox3"/>
+                   </item>
                    <item row="2" column="1">
-                    <widget class="QLineEdit" name="DCInputSignalLineEdit"/>
+                    <widget class="QDoubleSpinBox" name="DCInputSignalDoubleSpinBox3"/>
                    </item>
                   </layout>
                  </widget>
@@ -416,9 +379,6 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="0" column="1">
-                    <widget class="QLineEdit" name="FuncInputSignalLineEdit"/>
-                   </item>
                    <item row="1" column="0">
                     <widget class="QLabel" name="label_12">
                      <property name="text">
@@ -426,8 +386,11 @@
                      </property>
                     </widget>
                    </item>
+                   <item row="0" column="1">
+                    <widget class="QTextEdit" name="FuncInputSignalTextEdit4"/>
+                   </item>
                    <item row="1" column="1">
-                    <widget class="QLineEdit" name="FInputSignalLineEdit_3"/>
+                    <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox4"/>
                    </item>
                   </layout>
                  </widget>
@@ -533,8 +496,8 @@
    <slot>FORadioButtonActive(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>103</y>
+     <x>123</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -549,8 +512,8 @@
    <slot>SORadioButtonActive(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>406</x>
-     <y>103</y>
+     <x>262</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -565,8 +528,8 @@
    <slot>CurrFilterComboBox(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>148</y>
+     <x>150</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -581,8 +544,8 @@
    <slot>CurrInputComboBox(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
-     <y>479</y>
+     <x>118</x>
+     <y>367</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -598,11 +561,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>134</x>
-     <y>753</y>
+     <y>637</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
-     <y>741</y>
+     <y>674</y>
     </hint>
    </hints>
   </connection>
