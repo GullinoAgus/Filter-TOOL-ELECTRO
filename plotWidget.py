@@ -1,3 +1,4 @@
+import matplotlib.axes
 import numpy as np
 from matplotlib.widgets import Cursor
 from matplotlib.backends.backend_qtagg import FigureCanvas
@@ -7,6 +8,8 @@ import mplcursors
 
 
 class MplCanvas(FigureCanvas):
+    axes: matplotlib.axes.Axes
+
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.fig.add_subplot()
@@ -37,13 +40,20 @@ class BodePlot(MplCanvas):
         self.axes.set_xscale("linear")
         self.axes.cla()
         self.phaseaxes.cla()
-        self.gainline = self.axes.semilogx(t, y)
-        self.phaseline = self.phaseaxes.semilogx(t, z)
+        self.gainline = self.axes.semilogx(t, y, 'C0', label='Gain')
+        self.phaseline = self.phaseaxes.semilogx(t, z, 'C1', label='Phase')
         self.gainlinedataCursor = mplcursors.cursor(self.gainline)
         self.phaselinedataCursor = mplcursors.cursor(self.phaseline)
         self.cursor = Cursor(self.phaseaxes, useblit=True, color='gray', linestyle='--', linewidth=0.8)
         self.phaseaxes.format_coord = make_format(self.phaseaxes, self.axes)
+        self.axes.grid(visible=True, which='both')
 
+        self.axes.set_yticks(calculate_ticks(self.axes, 10, round_to=1, center=True))
+        self.phaseaxes.set_yticks(calculate_ticks(self.phaseaxes, 10, round_to=1, center=True))
+        self.axes.axhline(0, color='black', linewidth=0.75)
+        lines = self.gainline + self.phaseline
+        labs = [l.get_label() for l in lines]
+        self.axes.legend(lines, labs, loc=0)
         self.fig.canvas.draw()
         self.fig.canvas.flush_events()
 
@@ -70,12 +80,20 @@ class InOutPlot(MplCanvas):
             return
 
         self.axes.cla()
-        self.inputline = self.axes.plot(inputtime, inputamp)
-        self.outputline = self.axes.plot(inputtime, outputamp)
+        if len(inputamp) == 1:
+            self.inputline, stemline, baseline = self.axes.stem([0], inputamp, linefmt='C1', markerfmt='C1^', label='Input')
+        else:
+            self.inputline = self.axes.plot(inputtime, inputamp, 'C1', label='Input')
+
+        self.outputline = self.axes.plot(inputtime, outputamp, 'C0', label='Output')
         self.cursor = Cursor(self.axes, useblit=True, color='gray', linestyle='--', linewidth=0.8)
         self.inputdataCursor = mplcursors.cursor(self.inputline)
         self.outputdataCursor = mplcursors.cursor(self.outputline)
-
+        self.axes.grid(visible=True)
+        self.axes.set_yticks(calculate_ticks(self.axes, 10, round_to=0.001))
+        self.axes.legend(loc=0)
+        self.axes.axhline(0, color='black', linewidth=0.75)
+        self.axes.axvline(0, color='black', linewidth=0.75)
         self.fig.canvas.draw()
         self.fig.canvas.flush_events()
 
@@ -101,7 +119,10 @@ class PolesZerosPlot(MplCanvas):
             self.zerosdataCursor = mplcursors.cursor(self.zerosline)
 
         self.cursor = Cursor(self.axes, useblit=True, color='gray', linestyle='--', linewidth=0.8)
-
+        self.axes.grid(visible=True)
+        self.axes.set_yticks(calculate_ticks(self.axes, 10, round_to=0.01))
+        self.axes.axhline(0, color='black', linewidth=0.75)
+        self.axes.axvline(0, color='black', linewidth=0.75)
         self.fig.canvas.draw()
         self.fig.canvas.flush_events()
 
@@ -124,3 +145,16 @@ def make_format(current, other):
 
 def format_coord_complex(x, y):
     return "{:.2E} + j*({:.2E})".format(x, y)
+
+
+def calculate_ticks(ax, ticks, round_to=0.1, center=False):
+    upperbound = np.ceil(ax.get_ybound()[1] / round_to)
+    lowerbound = np.floor(ax.get_ybound()[0] / round_to)
+    dy = upperbound - lowerbound
+    fit = np.floor(dy / (ticks - 1)) + 1
+    dy_new = (ticks - 1) * fit
+    if center:
+        offset = np.floor((dy_new - dy) / 2)
+        lowerbound = lowerbound - offset
+    values = np.linspace(lowerbound, lowerbound + dy_new, ticks)
+    return values * round_to

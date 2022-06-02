@@ -1,10 +1,9 @@
-import io
-import sys, logging
+import sys
 import tokenize
-
+from main import logger
 import numpy as np
 import sympy as sp
-from PyQt6 import QtWidgets, QtGui
+from PyQt6 import QtWidgets
 from scipy import signal
 from sympy.parsing.sympy_parser import parse_expr, T
 
@@ -40,87 +39,97 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except NameError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except AttributeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except TypeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except tokenize.TokenError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except SyntaxError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except ZeroDivisionError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: saca ese cero de ahi carajo.")
             pass
         except:
-            tupla = sys.exc_info()
-            logging.critical("Error no capturado:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.critical(sys.exc_info()[1])
 
     def EnterTheMatrix(self):
 
         try:
             self.PlotBodeAndPoles()
             t, inputsignal = self.buildInput()
-            time, output = self.workingfilter.getoutputfrominput(t, inputsignal)
+            if self.ISComboBox.currentText() == 'δ Dirac':
+                time, output = self.workingfilter.getoutputfrominput(impulse=True)
+            else:
+                time, output = self.workingfilter.getoutputfrominput(t, inputsignal)
             self.InOut.plot(time, inputsignal, output)
 
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except NameError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except AttributeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except TypeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except tokenize.TokenError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
             pass
         except SyntaxError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
                                                           "contiene una funcion predefinida.")
-            tupla = sys.exc_info()
-            logging.error("Error:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except ZeroDivisionError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: saca ese cero de ahi carajo.")
             pass
         except:
-            tupla = sys.exc_info()
-            logging.critical("Error no capturado:", tupla[0], "\n", tupla[1], "\n", tupla[2])
+
+            logger.critical("Error no capturado:")
+            logger.error(sys.exc_info()[1])
 
     def buildFilter(self):  # TODO arreglar cuando la interfaz este completa
         if self.FORadio.isChecked():
@@ -139,16 +148,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                   self.ZFAFSettingsDoubleSpinBox.value(),
                                                   self.GainSettingsDoubleSpinBox.value())
                 case _:
-                    logging.debug('ERROR CASO DEFAULT DE buildFilter EN FIRST ORDER')
+                    logger.debug('ERROR CASO DEFAULT DE buildFilter EN FIRST ORDER')
         elif self.SORadio.isChecked():
             match self.SOComboBox.currentText():  # TODO terminar matchcase de segundo orden
                 case 'Low Pass':
                     xi = self.XiSettingsDoubleSpinBox3.value()
                     gain = self.GainSettingsDoubleSpinBox.value()
-                    if 0 < xi < 1/np.sqrt(2) and self.MGRadioButton.isChecked():
+                    if 0 < xi < 1 / np.sqrt(2) and self.MGRadioButton.isChecked():
                         peak = 1 / (2 * xi * np.sqrt(1 - 2 * xi ** 2))
                         if peak > gain:
-                            return SecondOrder.LowPass(self.RFSettingsDoubleSpinBox3.value(), xi, gain/peak)
+                            return SecondOrder.LowPass(self.RFSettingsDoubleSpinBox3.value(), xi, gain / peak)
                         else:
                             return SecondOrder.LowPass(self.RFSettingsDoubleSpinBox3.value(), xi)
                     elif self.BPGRadioButton.isChecked():
@@ -157,17 +166,71 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         return SecondOrder.LowPass(self.RFSettingsDoubleSpinBox3.value(), xi)
 
                 case 'High Pass':
-                    return FirstOrder.HighPass(float(self.PFSettingsLineEdit.text()))
+                    xi = self.XiSettingsDoubleSpinBox3.value()
+                    gain = self.GainSettingsDoubleSpinBox.value()
+                    if 0 < xi < 1 / np.sqrt(2) and self.MGRadioButton.isChecked():
+                        peak = 1 / (2 * xi * np.sqrt(1 - 2 * xi ** 2))
+                        if peak > gain:
+                            return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi, gain / peak)
+                        else:
+                            return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi)
+                    elif self.BPGRadioButton.isChecked():
+                        return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi, gain)
+                    else:
+                        return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi)
                 case 'All Pass':
-                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                    return SecondOrder.AllPass(self.RFSettingsDoubleSpinBox3.value(),
+                                               self.XiSettingsDoubleSpinBox3.value(),
+                                               self.GainSettingsDoubleSpinBox.value())
                 case 'Band Pass':
-                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                    return SecondOrder.BandPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                self.XiSettingsDoubleSpinBox3.value(),
+                                                self.GainSettingsDoubleSpinBox.value())
                 case 'Notch':
-                    return FirstOrder.AllPass(float(self.PFSettingsLineEdit.text()))
+                    return SecondOrder.NotchPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                 self.XiSettingsDoubleSpinBox3.value(),
+                                                 self.GainSettingsDoubleSpinBox.value())
                 case 'Create new filter':
-                    logging.debug('TODO')
+                    if self.MGRadioButton.isChecked():
+                        if self.NumeratorComboBox.currentIndex() == 0:
+                            if self.WSettingsDoubleSpinBox41.value() == 0:
+                                return SecondOrder.ArbitraryFilter(self.WSettingsDoubleSpinBox43.value(),
+                                                                   self.XiSettingsDoubleSpinBox43.value(),
+                                                                   [1, 0],
+                                                                   maxGain=True)
+                            else:
+                                return SecondOrder.ArbitraryFilter(self.WSettingsDoubleSpinBox43.value(),
+                                                                   self.XiSettingsDoubleSpinBox43.value(),
+                                                                   [1 / self.WSettingsDoubleSpinBox41.value(), 1],
+                                                                   k=self.GainSettingsDoubleSpinBox.value(),
+                                                                   maxGain=True)
+                        else:
+                            return SecondOrder.ArbitraryFilter.secondordnum(self.WSettingsDoubleSpinBox43.value(),
+                                                                            self.XiSettingsDoubleSpinBox43.value(),
+                                                                            self.WSettingsDoubleSpinBox42.value(),
+                                                                            self.XiSettingsDoubleSpinBox42.value(),
+                                                                            k=self.GainSettingsDoubleSpinBox.value(),
+                                                                            maxGain=True)
+                    else:
+                        if self.NumeratorComboBox.currentIndex() == 0:
+                            if self.WSettingsDoubleSpinBox41.value() == 0:
+                                return SecondOrder.ArbitraryFilter(self.WSettingsDoubleSpinBox43.value(),
+                                                                   self.XiSettingsDoubleSpinBox43.value(),
+                                                                   [1, 0],
+                                                                   k=self.GainSettingsDoubleSpinBox.value())
+                            else:
+                                return SecondOrder.ArbitraryFilter(self.WSettingsDoubleSpinBox43.value(),
+                                                                   self.XiSettingsDoubleSpinBox43.value(),
+                                                                   [1 / self.WSettingsDoubleSpinBox41.value(), 1],
+                                                                   k=self.GainSettingsDoubleSpinBox.value())
+                        else:
+                            return SecondOrder.ArbitraryFilter.secondordnum(self.WSettingsDoubleSpinBox43.value(),
+                                                                            self.XiSettingsDoubleSpinBox43.value(),
+                                                                            self.WSettingsDoubleSpinBox42.value(),
+                                                                            self.XiSettingsDoubleSpinBox42.value(),
+                                                                            k=self.GainSettingsDoubleSpinBox.value())
                 case _:
-                    logging.debug('ERROR CASO DEFAULT DE buildFilter EN SECOND ORDER')
+                    logger.debug('ERROR CASO DEFAULT DE buildFilter EN SECOND ORDER')
 
     def buildInput(self):  # TODO arreglar cuando la interfaz este completa
         points = np.linspace(0, 1, 1000, endpoint=True)
@@ -179,30 +242,38 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         match self.ISComboBox.currentText():
             case 'Cos':
                 inputsignalpoints = self.AInputSignalDoubleSpinBox2.value() * np.cos(points * 4 * np.pi)
-                timepoints = points * 2 / self.FInputSignalDoubleSpinBox2.value()
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox2.value()
             case 'Step':
                 inputsignalpoints = [self.AInputSignalDoubleSpinBox1.value() for i in points]
             case 'Periodic Pulse':
                 inputsignalpoints = self.AInputSignalDoubleSpinBox3.value() * \
-                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3.value()) - 0.5)
-                timepoints = points * 2 / self.FInputSignalDoubleSpinBox3.value()
+                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3.value()))
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3.value()
             case 'Triangle Periodic Pulse':
                 t = sp.Symbol('t', real=True)
-                expr = self.AInputSignalDoubleSpinBox2.value() * sp.Piecewise((-t + 1 / 4, t <= 1 / 2),
-                                                                              (t - 3 / 4, t > 1 / 2))
+                DC = self.DCInputSignalDoubleSpinBox3.value()
+                if DC == 0:
+                    expr = self.AInputSignalDoubleSpinBox3.value() * (-2 * t + 1)
+                elif DC == 1:
+                    expr = self.AInputSignalDoubleSpinBox3.value() * (2 * t - 1)
+                else:
+                    expr = self.AInputSignalDoubleSpinBox3.value() * \
+                           sp.Piecewise((2 / DC * t - 1, t <= DC), (-2 / (1 - DC) * t + 2 / (1 - DC) - 1, t > DC))
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
-                timepoints = points * 2 / self.FInputSignalDoubleSpinBox2.value()
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3.value()
             case 'δ Dirac':
-                timepoints, inputsignalpoints = signal.impulse(self.workingfilter.transferFunc)
+                timepoints = [0]
+                inputsignalpoints = [1]
             case 'Other':
                 t = sp.Symbol('t', real=True)
                 expr = parse_expr(self.correctExpression(self.FuncInputSignalTextEdit4.toPlainText().replace('\n', '')),
                                   local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox4.value()
             case _:
-                logging.error('CASO DEFAULT EN buildInput')
+                logger.error('CASO DEFAULT EN buildInput')
 
         return timepoints, inputsignalpoints
 
@@ -211,25 +282,27 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         exprlower = expr.lower()
         correctedexpr = expr
         for funct in validfuncs:
-            if funct.lower()+'(' in exprlower:
+            if funct.lower() + '(' in exprlower:
                 correctedexpr = exprlower.replace(funct.lower(), funct)
         return correctedexpr
 
     def FORadioButtonActive(self, state):
-        if state == True:
+        if state:
             self.FilterTypeStackedWidget.setCurrentIndex(0)
+            self.CurrFOFilterComboBox(self.FOComboBox.currentIndex())
 
     def SORadioButtonActive(self, state):
-        if state == True:
+        if state:
             self.FilterTypeStackedWidget.setCurrentIndex(1)
+            self.CurrSOFilterComboBox(self.SOComboBox.currentIndex())
 
-    def CurrFOFilterComboBox(self, index): #Combo box de los filtros de primer orden
+    def CurrFOFilterComboBox(self, index):  # Combo box de los filtros de primer orden
         if index == 3:
             self.FilterInfoStackedWidget.setCurrentIndex(1)
         else:
             self.FilterInfoStackedWidget.setCurrentIndex(0)
 
-    def CurrSOFilterComboBox(self, index): #Combo box de los filtros de segundo orden
+    def CurrSOFilterComboBox(self, index):  # Combo box de los filtros de segundo orden
         if index == 5:
             self.FilterInfoStackedWidget.setCurrentIndex(3)
         else:
@@ -238,7 +311,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def CurrInputSignalComboBox(self, index):
         if index == 1:
             self.InputTypeStackedWidget.setCurrentIndex(0)
-        elif index == 2:
+        elif index == 2 or index == 3:
             self.InputTypeStackedWidget.setCurrentIndex(2)
         elif index == 5:
             self.InputTypeStackedWidget.setCurrentIndex(3)
@@ -246,6 +319,3 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.InputTypeStackedWidget.setCurrentIndex(4)
         else:
             self.InputTypeStackedWidget.setCurrentIndex(1)
-
-
-

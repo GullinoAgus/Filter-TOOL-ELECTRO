@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1034</width>
+    <width>1064</width>
     <height>932</height>
    </rect>
   </property>
@@ -36,6 +36,12 @@
            </property>
            <item>
             <widget class="QGroupBox" name="groupBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="maximumSize">
               <size>
                <width>400</width>
@@ -365,6 +371,9 @@
                               <property name="maximum">
                                <double>10000000000000000139372116959414099130712064.000000000000000</double>
                               </property>
+                              <property name="singleStep">
+                               <double>0.010000000000000</double>
+                              </property>
                              </widget>
                             </item>
                            </layout>
@@ -377,6 +386,12 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_8">
                         <item>
                          <widget class="QLabel" name="label">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="text">
                            <string>D(s)</string>
                           </property>
@@ -386,6 +401,18 @@
                          <layout class="QGridLayout" name="gridLayout_13">
                           <item row="0" column="0">
                            <widget class="QLabel" name="label_7">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>118</width>
+                              <height>0</height>
+                             </size>
+                            </property>
                             <property name="text">
                              <string>ω</string>
                             </property>
@@ -419,6 +446,9 @@
                             <property name="maximum">
                              <double>10000000000000000139372116959414099130712064.000000000000000</double>
                             </property>
+                            <property name="singleStep">
+                             <double>0.010000000000000</double>
+                            </property>
                            </widget>
                           </item>
                          </layout>
@@ -442,6 +472,9 @@
                   </property>
                   <property name="maximum">
                    <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                  </property>
+                  <property name="value">
+                   <double>1.000000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -489,7 +522,7 @@
            <item>
             <widget class="QGroupBox" name="groupBox_2">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -673,8 +706,14 @@
                     </item>
                     <item row="2" column="1">
                      <widget class="QDoubleSpinBox" name="DCInputSignalDoubleSpinBox3">
+                      <property name="decimals">
+                       <number>2</number>
+                      </property>
                       <property name="maximum">
-                       <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.100000000000000</double>
                       </property>
                      </widget>
                     </item>
@@ -729,12 +768,18 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="sizeConstraint">
-           <enum>QLayout::SetNoConstraint</enum>
+           <enum>QLayout::SetDefaultConstraint</enum>
           </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
              <widget class="QGroupBox" name="BodePlotBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>300</width>
@@ -753,6 +798,12 @@
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
              <widget class="QGroupBox" name="InputAndOutputBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>300</width>
@@ -767,6 +818,12 @@
             </item>
             <item>
              <widget class="QGroupBox" name="PolesAndZerosBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>300</width>
