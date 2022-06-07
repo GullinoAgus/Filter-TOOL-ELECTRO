@@ -11,6 +11,7 @@ import plotWidget as pw
 from Filters import FirstOrder, SecondOrder
 from UI import Ui_MainWindow
 
+# FIXME Bug con ganancia maxima, se baja de mas en segundo orden
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
