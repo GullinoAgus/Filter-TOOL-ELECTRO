@@ -6,7 +6,7 @@ from scipy import signal
 class LowPass(VirtualFilter):
     def __init__(self, w0, xi, k=1):
         super().__init__()
-        self.transferFunc = signal.TransferFunction([0, 0, k], [1 / w0 ** 2, 2 * xi / w0, 1])
+        self.transferFunc = signal.TransferFunction([k], [1 / w0 ** 2, 2 * xi / w0, 1])
 
 
 class HighPass(VirtualFilter):
@@ -24,7 +24,7 @@ class AllPass(VirtualFilter):
 class BandPass(VirtualFilter):
     def __init__(self, w0, xi, k=1):
         super().__init__()
-        self.transferFunc = signal.TransferFunction([0, k * 2 * xi / w0, 0], [1 / w0 ** 2, 2 * xi / w0, 1])
+        self.transferFunc = signal.TransferFunction([k * 2 * xi / w0, 0], [1 / w0 ** 2, 2 * xi / w0, 1])
 
 
 class NotchPass(VirtualFilter):
@@ -47,7 +47,7 @@ class ArbitraryFilter(VirtualFilter):
             if len(index[0]) > 1:
                 index = index[0][0]
             maxgainvalue = 10**(gain[index]/20)
-            if maxgainvalue > k:
+            if maxgainvalue > np.abs(k):
 
                 self.transferFunc = signal.TransferFunction(num * k/maxgainvalue, [1 / w0 ** 2, 2 * xi / w0, 1])
             else:
