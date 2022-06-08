@@ -783,7 +783,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "TP FINAL GRUPO 5"))
         self.groupBox.setTitle(_translate("MainWindow", "Settings"))
         self.FORadio.setText(_translate("MainWindow", "First Order"))
         self.SORadio.setText(_translate("MainWindow", "Second Order"))
