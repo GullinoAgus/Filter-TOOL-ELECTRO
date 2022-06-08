@@ -3,13 +3,14 @@ import tokenize
 from main import logger
 import numpy as np
 import sympy as sp
-from PyQt6 import QtWidgets
+from PyQt6 import QtWidgets, QtGui
 from scipy import signal
 from sympy.parsing.sympy_parser import parse_expr, T
-from RLC import RLC
+from RLC.RLC import RLC
 import plotWidget as pw
 from Filters import FirstOrder, SecondOrder
 from UI import Ui_MainWindow
+
 
 # FIXME Bug con ganancia maxima, se baja de mas en segundo orden
 
@@ -21,12 +22,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Bode = pw.BodePlot(parent=self.BodePlotBox)
         self.InOut = pw.InOutPlot(parent=self.InputAndOutputBox)
         self.PolesZeros = pw.PolesZerosPlot(parent=self.PolesAndZerosBox)
+        self.RLCBode = pw.BodePlot(parent=self.RLCBodePlotBox)
+        self.RLCInOut = pw.InOutPlot(parent=self.RLCInputPlotBox)
         self.BodePlotBox.layout().addWidget(self.Bode.navToolBar)
         self.BodePlotBox.layout().addWidget(self.Bode)
         self.PolesAndZerosBox.layout().addWidget(self.PolesZeros.navToolBar)
         self.PolesAndZerosBox.layout().addWidget(self.PolesZeros)
         self.InputAndOutputBox.layout().addWidget(self.InOut.navToolBar)
         self.InputAndOutputBox.layout().addWidget(self.InOut)
+        self.RLCBodePlotBox.layout().addWidget(self.RLCBode.navToolBar)
+        self.RLCBodePlotBox.layout().addWidget(self.RLCBode)
+        self.RLCInputPlotBox.layout().addWidget(self.RLCInOut.navToolBar)
+        self.RLCInputPlotBox.layout().addWidget(self.RLCInOut)
+        self.RLCpixmap = QtGui.QPixmap()
+        self.RLCpixmap.load('RLC/RLC.png')
+        self.RLCImage.setPixmap(self.RLCpixmap)
         self.workingfilter = None
         self.workingRLC = None
 
@@ -44,32 +54,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             logger.error(sys.exc_info()[1])
             pass
-        except NameError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
-
-            logger.error(sys.exc_info()[1])
-            pass
-        except AttributeError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
-
-            logger.error(sys.exc_info()[1])
-            pass
         except TypeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
-
-            logger.error(sys.exc_info()[1])
-            pass
-        except tokenize.TokenError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
-
-            logger.error(sys.exc_info()[1])
-            pass
-        except SyntaxError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
 
             logger.error(sys.exc_info()[1])
             pass
@@ -133,7 +119,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             logger.critical("Error no capturado:")
             logger.error(sys.exc_info()[1])
 
-    def buildFilter(self):  # TODO arreglar cuando la interfaz este completa
+    def buildFilter(self):
         if self.FORadio.isChecked():
             match self.FOComboBox.currentText():
                 case 'Low Pass':
@@ -152,7 +138,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 case _:
                     logger.debug('ERROR CASO DEFAULT DE buildFilter EN FIRST ORDER')
         elif self.SORadio.isChecked():
-            match self.SOComboBox.currentText():  # TODO terminar matchcase de segundo orden
+            match self.SOComboBox.currentText():
                 case 'Low Pass':
                     xi = self.XiSettingsDoubleSpinBox3.value()
                     gain = self.GainSettingsDoubleSpinBox.value()
@@ -234,7 +220,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 case _:
                     logger.debug('ERROR CASO DEFAULT DE buildFilter EN SECOND ORDER')
 
-    def buildInput(self):  # TODO arreglar cuando la interfaz este completa
+    def buildInput(self):
         points = np.linspace(0, 1, 1000, endpoint=True)
         points4expr = np.linspace(0, 1, 500, endpoint=True)
         points4expr = np.append(points4expr, points4expr)
@@ -248,29 +234,30 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             case 'Step':
                 inputsignalpoints = [self.AInputSignalDoubleSpinBox1.value() for i in points]
             case 'Periodic Pulse':
-                inputsignalpoints = self.AInputSignalDoubleSpinBox3.value() * \
-                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3.value()))
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3.value()
+                inputsignalpoints = self.AInputSignalDoubleSpinBox3_2.value() * \
+                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3_2.value()))
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
             case 'Triangle Periodic Pulse':
                 t = sp.Symbol('t', real=True)
-                DC = self.DCInputSignalDoubleSpinBox3.value()
+                DC = self.DCInputSignalDoubleSpinBox3_2.value()
                 if DC == 0:
-                    expr = self.AInputSignalDoubleSpinBox3.value() * (-2 * t + 1)
+                    expr = self.AInputSignalDoubleSpinBox3_2.value() * (-2 * t + 1)
                 elif DC == 1:
-                    expr = self.AInputSignalDoubleSpinBox3.value() * (2 * t - 1)
+                    expr = self.AInputSignalDoubleSpinBox3_2.value() * (2 * t - 1)
                 else:
-                    expr = self.AInputSignalDoubleSpinBox3.value() * \
+                    expr = self.AInputSignalDoubleSpinBox3_2.value() * \
                            sp.Piecewise((2 / DC * t - 1, t <= DC), (-2 / (1 - DC) * t + 2 / (1 - DC) - 1, t > DC))
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3.value()
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
             case 'δ Dirac':
                 timepoints = [0]
                 inputsignalpoints = [1]
             case 'Other':
                 t = sp.Symbol('t', real=True)
-                expr = parse_expr(self.correctExpression(self.FuncInputSignalTextEdit4.toPlainText().replace('\n', '')),
-                                  local_dict={'t': t}, transformations=T[:])
+                expr = parse_expr(
+                    self.correctExpression(self.FuncInputSignalTextEdit4_2.toPlainText().replace('\n', '')),
+                    local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
                 timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox4.value()
@@ -325,17 +312,153 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     '''
     Slots for RLC section
     '''
-    
+
     def calculateRLC(self):
-        return
-    
-    def calculateRLCInput(self):
-        return
-    
-    def buildRLC(self):
+        if self.MeasurPointComboBox.currentIndex() == -1 or self.ReferenceComboBox.currentIndex() == -1:
+            return
+
         try:
-            self.workingRLC
-        
+
+            self.workingRLC = RLC(self.RvalueDoubleSpinBox.value(),
+                                  self.LvalueDoubleSpinBox.value(),
+                                  self.CvalueDoubleSpinBox.value() * 1e-6,
+                                  int(self.MeasurPointComboBox.currentText()),
+                                  int(self.ReferenceComboBox.currentText()))
+            self.w0Label.setText("{:.3E}".format(self.workingRLC.get_resonant_freq()))
+            self.QLabel.setText("{:.2f}".format(self.workingRLC.get_Q()))
+            w, a, p = self.workingRLC.get_bode()
+            self.RLCBode.plot(w, a, p)
         except ValueError:
+            QtWidgets.QMessageBox.critical(self, "Error", f"Error: {sys.exc_info()[1]}.")
+
+            logger.error(sys.exc_info()[1])
             pass
-            
+        except TypeError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except ZeroDivisionError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: saca ese cero de ahi carajo.")
+            pass
+        except:
+
+            logger.critical(sys.exc_info()[1])
+
+    def calculateRLCInput(self):
+        try:
+            self.calculateRLC()
+            t, inputsignal = self.buildRLCInput()
+            if self.ISComboBox_2.currentText() == 'δ Dirac':
+                time, output = self.workingRLC.get_output_from_input(impulse=True)
+            else:
+                time, output = self.workingRLC.get_output_from_input(t, inputsignal)
+            self.RLCInOut.plot(time, inputsignal, output)
+
+        except ValueError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except NameError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
+                                                          "contiene una funcion predefinida.")
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except AttributeError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
+                                                          "contiene una funcion predefinida.")
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except TypeError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except tokenize.TokenError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
+                                                          "contiene una funcion predefinida.")
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except SyntaxError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
+                                                          "contiene una funcion predefinida.")
+
+            logger.error(sys.exc_info()[1])
+            pass
+        except ZeroDivisionError:
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: saca ese cero de ahi carajo.")
+            pass
+        except:
+
+            logger.critical("Error no capturado:")
+            logger.error(sys.exc_info()[1])
+
+    def buildRLCInput(self):
+        points = np.linspace(0, 1, 1000, endpoint=True)
+        points4expr = np.linspace(0, 1, 500, endpoint=True)
+        points4expr = np.append(points4expr, points4expr)
+        inputsignalpoints = None
+        timepoints = points
+
+        match self.ISComboBox.currentText():
+            case 'Cos':
+                inputsignalpoints = self.AInputSignalDoubleSpinBox2_2.value() * np.cos(points * 4 * np.pi)
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox2_2.value()
+            case 'Step':
+                inputsignalpoints = [self.AInputSignalDoubleSpinBox1_2.value() for i in points]
+            case 'Periodic Pulse':
+                inputsignalpoints = self.AInputSignalDoubleSpinBox3_2.value() * \
+                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3_2.value()))
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
+            case 'Triangle Periodic Pulse':
+                t = sp.Symbol('t', real=True)
+                DC = self.DCInputSignalDoubleSpinBox3_2.value()
+                if DC == 0:
+                    expr = self.AInputSignalDoubleSpinBox3_2.value() * (-2 * t + 1)
+                elif DC == 1:
+                    expr = self.AInputSignalDoubleSpinBox3_2.value() * (2 * t - 1)
+                else:
+                    expr = self.AInputSignalDoubleSpinBox3_2.value() * \
+                           sp.Piecewise((2 / DC * t - 1, t <= DC), (-2 / (1 - DC) * t + 2 / (1 - DC) - 1, t > DC))
+                f = sp.lambdify(t, expr, "numpy")
+                inputsignalpoints = f(points4expr)
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
+            case 'δ Dirac':
+                timepoints = [0]
+                inputsignalpoints = [1]
+            case 'Other':
+                t = sp.Symbol('t', real=True)
+                expr = parse_expr(
+                    self.correctExpression(self.FuncInputSignalTextEdit4_2.toPlainText().replace('\n', '')),
+                    local_dict={'t': t}, transformations=T[:])
+                f = sp.lambdify(t, expr, "numpy")
+                inputsignalpoints = f(points4expr)
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox4_2.value()
+            case _:
+                logger.error('CASO DEFAULT EN buildInput')
+
+        return timepoints, inputsignalpoints
+
+    def MeasPointValidation(self, index: int):
+        if index == self.ReferenceComboBox.currentIndex():
+            self.MeasurPointComboBox.setCurrentIndex(-1)
+
+    def ReferValidation(self, index: int):
+        if index == self.MeasurPointComboBox.currentIndex():
+            self.ReferenceComboBox.setCurrentIndex(-1)
+
+    def CurrRLCInputSignalComboBox(self, index):
+        if index == 1:
+            self.InputTypeStackedWidget_2.setCurrentIndex(0)
+        elif index == 2 or index == 3:
+            self.InputTypeStackedWidget_2.setCurrentIndex(2)
+        elif index == 5:
+            self.InputTypeStackedWidget_2.setCurrentIndex(3)
+        elif index == 4:
+            self.InputTypeStackedWidget_2.setCurrentIndex(4)
+        else:
+            self.InputTypeStackedWidget_2.setCurrentIndex(1)
