@@ -261,29 +261,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             case 'Step':
                 inputsignalpoints = [self.AInputSignalDoubleSpinBox1.value() for i in points]
             case 'Periodic Pulse':
-                inputsignalpoints = self.AInputSignalDoubleSpinBox3_2.value() * \
-                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3_2.value()))
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
+                inputsignalpoints = self.AInputSignalDoubleSpinBox3.value() * \
+                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3.value()))
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3.value()
             case 'Triangle Periodic Pulse':
                 t = sp.Symbol('t', real=True)
-                DC = self.DCInputSignalDoubleSpinBox3_2.value()
+                DC = self.DCInputSignalDoubleSpinBox3.value()
                 if DC == 0:
-                    expr = self.AInputSignalDoubleSpinBox3_2.value() * (-2 * t + 1)
+                    expr = self.AInputSignalDoubleSpinBox3.value() * (-2 * t + 1)
                 elif DC == 1:
-                    expr = self.AInputSignalDoubleSpinBox3_2.value() * (2 * t - 1)
+                    expr = self.AInputSignalDoubleSpinBox3.value() * (2 * t - 1)
                 else:
-                    expr = self.AInputSignalDoubleSpinBox3_2.value() * \
+                    expr = self.AInputSignalDoubleSpinBox3.value() * \
                            sp.Piecewise((2 / DC * t - 1, t <= DC), (-2 / (1 - DC) * t + 2 / (1 - DC) - 1, t > DC))
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
+                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3.value()
             case 'δ Dirac':
                 timepoints = [0]
                 inputsignalpoints = [1]
             case 'Other':
                 t = sp.Symbol('t', real=True)
                 expr = parse_expr(
-                    self.correctExpression(self.FuncInputSignalTextEdit4_2.toPlainText().replace('\n', '')),
+                    self.correctExpression(self.FuncInputSignalTextEdit4.toPlainText().replace('\n', '')),
                     local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points4expr)
