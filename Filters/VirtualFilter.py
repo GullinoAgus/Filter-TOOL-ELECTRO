@@ -1,8 +1,5 @@
 from scipy import signal
 
-import numpy as np
-from matplotlib.widgets import Cursor
-
 
 class VirtualFilter:
     def __init__(self):
@@ -17,7 +14,7 @@ class VirtualFilter:
 
     def getoutputfrominput(self, inputtime=None, inputvalue=None, impulse=False):
         if impulse:
-            tout, yout = signal.impulse(self.transferFunc)
+            tout, yout = signal.impulse(self.transferFunc, N=5000)
         elif inputvalue is not None and inputtime is not None:
             tout, yout, xout = signal.lsim(self.transferFunc, U=inputvalue, T=inputtime)
         else:
