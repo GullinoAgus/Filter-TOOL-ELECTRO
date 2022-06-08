@@ -1,5 +1,6 @@
+from typing import Tuple
 from scipy import signal
-
+from matplotlib import pyplot as plt
 
 
 '''
@@ -7,8 +8,6 @@ RLC circuit calculator.
 
 Circuit:       Vin-----/\/\/-----uuuuu-----| |-----GND
 Measure point:      1         2         3       4
-
-
 '''
 class RLC():
     R: float
@@ -43,40 +42,59 @@ class RLC():
         match self.measure_point, self.reference:
             
             case 1, 2:
-                self.transfer_function.__init__([self.C * self.R, 0], denom)
+                self.transfer_function = signal.TransferFunction([self.C * self.R, 0], denom)
                 pass
             case 2, 1:
-                self.transfer_function.__init__([-1 * self.C * self.R, 0], denom)
+                self.transfer_function = signal.TransferFunction([-1 * self.C * self.R, 0], denom)
                 pass
             case 2, 3:
-                self.transfer_function.__init__([self.C * self.L, 0, 0], denom)
+                self.transfer_function = signal.TransferFunction([self.C * self.L, 0, 0], denom)
                 pass
             case 3, 2:
-                self.transfer_function.__init__([-1 * self.C * self.L, 0, 0], denom)
+                self.transfer_function = signal.TransferFunction([-1 * self.C * self.L, 0, 0], denom)
                 pass
             case 3, 4:
-                self.transfer_function.__init__([1], denom)
+                self.transfer_function = signal.TransferFunction([1], denom)
                 pass
             case 4, 3:
-                self.transfer_function.__init__([-1], denom)
+                self.transfer_function = signal.TransferFunction([-1], denom)
                 pass
             case 1, 3:
-                self.transfer_function.__init__([self.L * self.C, self.C * self.R, 0], denom)
+                self.transfer_function = signal.TransferFunction([self.L * self.C, self.C * self.R, 0], denom)
                 pass
             case 3, 1:
-                self.transfer_function.__init__([-1 * self.L * self.C, -1 * self.C * self.R, 0], denom)
+                self.transfer_function = signal.TransferFunction([-1 * self.L * self.C, -1 * self.C * self.R, 0], denom)
                 pass
             case 2, 4:
-                self.transfer_function.__init__([self.C * self.L, 0, 1], denom)
+                self.transfer_function = signal.TransferFunction([self.C * self.L, 0, 1], denom)
                 pass
             case 4, 2:
-                self.transfer_function.__init__([-1 * self.C * self.L, 0, -1], denom)
+                self.transfer_function = signal.TransferFunction([-1 * self.C * self.L, 0, -1], denom)
                 pass
             case 1, 4:
-                self.transfer_function.__init__([1], [1])
+                self.transfer_function = signal.TransferFunction([1], [1])
                 pass
             case 4, 1:
-                self.transfer_function.__init__([-1], [1])
+                self.transfer_function = signal.TransferFunction([-1], [1])
                 pass
+    
+    def get_bode(self) -> Tuple[list, list, list]:
+        return signal.bode(self.transfer_function, n=5000)
+
+
+
+if __name__ == '__main__':
+    for i in range(1, 5):
+        for j in range(1, 5):
+            if i == j:
+                continue
+            rlc = RLC(measure_point=i, reference=j)
+            w, gain, phase = rlc.get_bode()
+            eje1 = plt.subplot(211)
+            eje2 = plt.subplot(212)
+            eje1.semilogx(w, gain)
+            eje2.semilogx(w, phase)
+            plt.show()
+            
             
             

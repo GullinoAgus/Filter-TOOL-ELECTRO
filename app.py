@@ -6,7 +6,7 @@ import sympy as sp
 from PyQt6 import QtWidgets
 from scipy import signal
 from sympy.parsing.sympy_parser import parse_expr, T
-
+from RLC import RLC
 import plotWidget as pw
 from Filters import FirstOrder, SecondOrder
 from UI import Ui_MainWindow
@@ -28,6 +28,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.InputAndOutputBox.layout().addWidget(self.InOut.navToolBar)
         self.InputAndOutputBox.layout().addWidget(self.InOut)
         self.workingfilter = None
+        self.workingRLC = None
 
     def PlotBodeAndPoles(self):
 
@@ -320,3 +321,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.InputTypeStackedWidget.setCurrentIndex(4)
         else:
             self.InputTypeStackedWidget.setCurrentIndex(1)
+
+    '''
+    Slots for RLC section
+    '''
+    
+    def calculateRLC(self):
+        return
+    
+    def calculateRLCInput(self):
+        return
+    
+    def buildRLC(self):
+        try:
+            self.workingRLC
+        
+        except ValueError:
+            pass
+            
