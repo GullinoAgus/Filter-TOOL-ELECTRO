@@ -12,11 +12,10 @@ from Filters import FirstOrder, SecondOrder
 from UI import Ui_MainWindow
 
 
-# FIXME Bug con ganancia maxima, se baja de mas en segundo orden
-
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowIcon(QtGui.QIcon('icon.png'))
         sp.init_printing()
         self.setupUi(self)
         self.Bode = pw.BodePlot(parent=self.BodePlotBox)
@@ -144,7 +143,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     gain = self.GainSettingsDoubleSpinBox.value()
                     if 0 < xi < 1 / np.sqrt(2) and self.MGRadioButton.isChecked():
                         peak = 1 / (2 * xi * np.sqrt(1 - 2 * xi ** 2))
-                        if peak > gain:
+                        if peak > np.abs(gain):
                             return SecondOrder.LowPass(self.RFSettingsDoubleSpinBox3.value(), xi, gain / peak)
                         else:
                             return SecondOrder.LowPass(self.RFSettingsDoubleSpinBox3.value(), xi)
@@ -158,7 +157,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     gain = self.GainSettingsDoubleSpinBox.value()
                     if 0 < xi < 1 / np.sqrt(2) and self.MGRadioButton.isChecked():
                         peak = 1 / (2 * xi * np.sqrt(1 - 2 * xi ** 2))
-                        if peak > gain:
+                        if peak > np.abs(gain):
                             return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi, gain / peak)
                         else:
                             return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi)
@@ -171,13 +170,31 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                self.XiSettingsDoubleSpinBox3.value(),
                                                self.GainSettingsDoubleSpinBox.value())
                 case 'Band Pass':
-                    return SecondOrder.BandPass(self.RFSettingsDoubleSpinBox3.value(),
-                                                self.XiSettingsDoubleSpinBox3.value(),
-                                                self.GainSettingsDoubleSpinBox.value())
+                    if self.MGRadioButton.isChecked():
+                        if np.abs(self.GainSettingsDoubleSpinBox.value()) < 1:
+                            return SecondOrder.BandPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                        self.XiSettingsDoubleSpinBox3.value(),
+                                                        self.GainSettingsDoubleSpinBox.value())
+                        else:
+                            return SecondOrder.BandPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                        self.XiSettingsDoubleSpinBox3.value())
+                    else:
+                        return SecondOrder.BandPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                    self.XiSettingsDoubleSpinBox3.value(),
+                                                    self.GainSettingsDoubleSpinBox.value())
                 case 'Notch':
-                    return SecondOrder.NotchPass(self.RFSettingsDoubleSpinBox3.value(),
-                                                 self.XiSettingsDoubleSpinBox3.value(),
-                                                 self.GainSettingsDoubleSpinBox.value())
+                    if self.MGRadioButton.isChecked():
+                        if np.abs(self.GainSettingsDoubleSpinBox.value()) < 1:
+                            return SecondOrder.NotchPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                         self.XiSettingsDoubleSpinBox3.value(),
+                                                         self.GainSettingsDoubleSpinBox.value())
+                        else:
+                            return SecondOrder.NotchPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                         self.XiSettingsDoubleSpinBox3.value())
+                    else:
+                        return SecondOrder.NotchPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                     self.XiSettingsDoubleSpinBox3.value(),
+                                                     self.GainSettingsDoubleSpinBox.value())
                 case 'Create new filter':
                     if self.MGRadioButton.isChecked():
                         if self.NumeratorComboBox.currentIndex() == 0:
@@ -404,7 +421,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         inputsignalpoints = None
         timepoints = points
 
-        match self.ISComboBox.currentText():
+        match self.ISComboBox_2.currentText():
             case 'Cos':
                 inputsignalpoints = self.AInputSignalDoubleSpinBox2_2.value() * np.cos(points * 4 * np.pi)
                 timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox2_2.value()
