@@ -10,14 +10,25 @@ from RLC.RLC import RLC
 import plotWidget as pw
 from Filters import FirstOrder, SecondOrder
 from UI import Ui_MainWindow
+import os
+
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(QtGui.QIcon('icon.png'))
         sp.init_printing()
         self.setupUi(self)
+        icono = QtGui.QIcon(resource_path('icon.png'))
+        self.setWindowIcon(icono)
         self.Bode = pw.BodePlot(parent=self.BodePlotBox)
         self.InOut = pw.InOutPlot(parent=self.InputAndOutputBox)
         self.PolesZeros = pw.PolesZerosPlot(parent=self.PolesAndZerosBox)
@@ -33,9 +44,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.RLCBodePlotBox.layout().addWidget(self.RLCBode)
         self.RLCInputPlotBox.layout().addWidget(self.RLCInOut.navToolBar)
         self.RLCInputPlotBox.layout().addWidget(self.RLCInOut)
-        self.RLCpixmap = QtGui.QPixmap()
-        self.RLCpixmap.load('RLC/RLC.png')
-        self.RLCImage.setPixmap(self.RLCpixmap)
+        ImageRLC = QtGui.QPixmap(resource_path('RLC.png'))
+        self.RLCImage.setPixmap(ImageRLC)
         self.workingfilter = None
         self.workingRLC = None
 
