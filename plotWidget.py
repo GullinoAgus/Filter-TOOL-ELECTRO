@@ -9,6 +9,8 @@ import mplcursors
 
 class MplCanvas(FigureCanvas):
     axes: matplotlib.axes.Axes
+    fig: Figure
+    navToolBar: NavigationToolbar
 
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
@@ -52,7 +54,7 @@ class BodePlot(MplCanvas):
         self.phaseaxes.set_yticks(calculate_ticks(self.phaseaxes, 10, round_to=1, center=True))
         self.axes.axhline(0, color='black', linewidth=0.75)
         lines = self.gainline + self.phaseline
-        labs = [l.get_label() for l in lines]
+        labs = [line.get_label() for line in lines]
         self.axes.legend(lines, labs, loc=0)
         self.fig.canvas.draw()
         self.fig.canvas.flush_events()
@@ -81,7 +83,8 @@ class InOutPlot(MplCanvas):
 
         self.axes.cla()
         if len(inputamp) == 1:
-            self.inputline, stemline, baseline = self.axes.stem([0], inputamp, linefmt='C1', markerfmt='C1^', label='Input')
+            self.inputline, stemline, baseline = self.axes.stem([0], inputamp, linefmt='C1', markerfmt='C1^',
+                                                                label='Input')
         else:
             self.inputline = self.axes.plot(inputtime, inputamp, 'C1', label='Input')
 
