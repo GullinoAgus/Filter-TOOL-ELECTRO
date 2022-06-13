@@ -132,15 +132,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.FORadio.isChecked():
             match self.FOComboBox.currentText():
                 case 'Low Pass':
+                    if self.MGRadioButton.isChecked():
+                        return FirstOrder.LowPass(self.CFSettingsDoubleSpinBox.value())
                     return FirstOrder.LowPass(self.CFSettingsDoubleSpinBox.value(),
                                               self.GainSettingsDoubleSpinBox.value())
                 case 'High Pass':
+                    if self.MGRadioButton.isChecked():
+                        return FirstOrder.HighPass(self.CFSettingsDoubleSpinBox.value())
                     return FirstOrder.HighPass(self.CFSettingsDoubleSpinBox.value(),
                                                self.GainSettingsDoubleSpinBox.value())
                 case 'All Pass':
+                    if self.MGRadioButton.isChecked():
+                        return FirstOrder.AllPass(self.CFSettingsDoubleSpinBox.value())
                     return FirstOrder.AllPass(self.CFSettingsDoubleSpinBox.value(),
                                               self.GainSettingsDoubleSpinBox.value())
                 case 'Create new filter':
+                    if self.MGRadioButton.isChecked():
+                        return FirstOrder.ArbitraryFO(self.PFAFSettingsDoubleSpinBox.value(),
+                                                      self.ZFAFSettingsDoubleSpinBox.value())
                     return FirstOrder.ArbitraryFO(self.PFAFSettingsDoubleSpinBox.value(),
                                                   self.ZFAFSettingsDoubleSpinBox.value(),
                                                   self.GainSettingsDoubleSpinBox.value())
@@ -248,22 +257,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     logger.debug('ERROR CASO DEFAULT DE buildFilter EN SECOND ORDER')
 
     def buildInput(self):
-        points = np.linspace(0, 1, 1000, endpoint=True)
-        points4expr = np.linspace(0, 1, 500, endpoint=True)
-        points4expr = np.append(points4expr, points4expr)
+        periods_quant = self.TQUANTDoubleSpinBox.value()
+        points = np.linspace(0, periods_quant, int(1000 * periods_quant), endpoint=True)
         inputsignalpoints = None
         timepoints = points
+        
 
         match self.ISComboBox.currentText():
             case 'Cos':
-                inputsignalpoints = self.AInputSignalDoubleSpinBox2.value() * np.cos(points * 4 * np.pi)
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox2.value()
+                inputsignalpoints = self.AInputSignalDoubleSpinBox2.value() * np.cos(points * 2 * np.pi)
+                timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox2.value()
             case 'Step':
                 inputsignalpoints = [self.AInputSignalDoubleSpinBox1.value() for i in points]
             case 'Periodic Pulse':
                 inputsignalpoints = self.AInputSignalDoubleSpinBox3.value() * \
-                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3.value()))
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3.value()
+                                    (signal.square(points * 2 * np.pi, self.DCInputSignalDoubleSpinBox3.value()))
+                timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox3.value()
             case 'Triangle Periodic Pulse':
                 t = sp.Symbol('t', real=True)
                 DC = self.DCInputSignalDoubleSpinBox3.value()
@@ -275,8 +284,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     expr = self.AInputSignalDoubleSpinBox3.value() * \
                            sp.Piecewise((2 / DC * t - 1, t <= DC), (-2 / (1 - DC) * t + 2 / (1 - DC) - 1, t > DC))
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignalpoints = f(points4expr)
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3.value()
+                inputsignalpoints = f(points)
+                timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox3.value()
             case 'δ Dirac':
                 timepoints = [0]
                 inputsignalpoints = [1]
@@ -286,8 +295,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.correctExpression(self.FuncInputSignalTextEdit4.toPlainText().replace('\n', '')),
                     local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignalpoints = f(points4expr)
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox4.value()
+                inputsignalpoints = f(points)
+                timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox4.value()
             case _:
                 logger.error('CASO DEFAULT EN buildInput')
 
@@ -425,22 +434,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             logger.error(sys.exc_info()[1])
 
     def buildRLCInput(self):
-        points = np.linspace(0, 1, 1000, endpoint=True)
-        points4expr = np.linspace(0, 1, 500, endpoint=True)
-        points4expr = np.append(points4expr, points4expr)
+        periods_quant = self.TQUANTDoubleSpinBox.value()
+        points = np.linspace(0, periods_quant, int(1000 * periods_quant), endpoint=True)
         inputsignalpoints = None
         timepoints = points
 
         match self.ISComboBox_2.currentText():
             case 'Cos':
-                inputsignalpoints = self.AInputSignalDoubleSpinBox2_2.value() * np.cos(points * 4 * np.pi)
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox2_2.value()
+                inputsignalpoints = self.AInputSignalDoubleSpinBox2_2.value() * np.cos(points * 2 * np.pi)
+                timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox2_2.value()
             case 'Step':
                 inputsignalpoints = [self.AInputSignalDoubleSpinBox1_2.value() for i in points]
             case 'Periodic Pulse':
                 inputsignalpoints = self.AInputSignalDoubleSpinBox3_2.value() * \
-                                    (signal.square(points * 4 * np.pi, self.DCInputSignalDoubleSpinBox3_2.value()))
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
+                                    (signal.square(points * 2 * np.pi, self.DCInputSignalDoubleSpinBox3_2.value()))
+                timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
             case 'Triangle Periodic Pulse':
                 t = sp.Symbol('t', real=True)
                 DC = self.DCInputSignalDoubleSpinBox3_2.value()
@@ -452,8 +460,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     expr = self.AInputSignalDoubleSpinBox3_2.value() * \
                            sp.Piecewise((2 / DC * t - 1, t <= DC), (-2 / (1 - DC) * t + 2 / (1 - DC) - 1, t > DC))
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignalpoints = f(points4expr)
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
+                inputsignalpoints = f(points)
+                timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
             case 'δ Dirac':
                 timepoints = [0]
                 inputsignalpoints = [1]
@@ -463,8 +471,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.correctExpression(self.FuncInputSignalTextEdit4_2.toPlainText().replace('\n', '')),
                     local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignalpoints = f(points4expr)
-                timepoints = points * 4 * np.pi / self.FInputSignalDoubleSpinBox4_2.value()
+                inputsignalpoints = f(points)
+                timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox4_2.value()
             case _:
                 logger.error('CASO DEFAULT EN buildInput')
 
