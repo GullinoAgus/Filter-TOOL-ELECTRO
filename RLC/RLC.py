@@ -12,14 +12,7 @@ Measure point:      1         2         3       4
 '''
 
 
-class RLC():
-    R: float
-    L: float
-    C: float
-    measure_point: int
-    reference: int
-    transfer_function: signal.TransferFunction
-
+class RLC:
     def __init__(self, R=1, L=1, C=1, measure_point=1, reference=2) -> None:
         if measure_point == reference:
             raise ValueError("Measure point and reference cannot be the same")

@@ -8,10 +8,6 @@ import mplcursors
 
 
 class MplCanvas(FigureCanvas):
-    axes: matplotlib.axes.Axes
-    fig: Figure
-    navToolBar: NavigationToolbar
-
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.fig.add_subplot()

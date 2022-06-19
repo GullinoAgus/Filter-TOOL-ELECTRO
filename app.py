@@ -261,7 +261,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         points = np.linspace(0, periods_quant, int(1000 * periods_quant), endpoint=True)
         inputsignalpoints = None
         timepoints = points
-        
 
         match self.ISComboBox.currentText():
             case 'Cos':
@@ -434,7 +433,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             logger.error(sys.exc_info()[1])
 
     def buildRLCInput(self):
-        periods_quant = self.TQUANTDoubleSpinBox.value()
+        periods_quant = self.TQUANTDoubleSpinBox_2.value()
         points = np.linspace(0, periods_quant, int(1000 * periods_quant), endpoint=True)
         inputsignalpoints = None
         timepoints = points
