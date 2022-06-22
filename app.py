@@ -22,6 +22,16 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
+def correctExpression(expr: str):
+    validfuncs = sp.functions.__all__
+    exprlower = expr.lower()
+    correctedexpr = expr
+    for funct in validfuncs:
+        if funct.lower() + '(' in exprlower:
+            correctedexpr = exprlower.replace(funct.lower(), funct)
+    return correctedexpr
+
+
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -283,7 +293,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     expr = self.AInputSignalDoubleSpinBox3.value() * \
                            sp.Piecewise((2 / DC * t - 1, t <= DC), (-2 / (1 - DC) * t + 2 / (1 - DC) - 1, t > DC))
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignalpoints = f(points)
+
+                inputsignalpoints = f(np.linspace(0, 1, 1000))
+                if periods_quant.is_integer():
+                    inputsignalpoints = np.tile(inputsignalpoints, int(periods_quant))
+                else:
+                    inputsignalpoints = np.tile(inputsignalpoints, int(np.floor(periods_quant) + 1))
+                    indexlimit = int(1000 * periods_quant)
+                    inputsignalpoints = inputsignalpoints[0:indexlimit]
                 timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox3.value()
             case 'δ Dirac':
                 timepoints = [0]
@@ -291,7 +308,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             case 'Other':
                 t = sp.Symbol('t', real=True)
                 expr = parse_expr(
-                    self.correctExpression(self.FuncInputSignalTextEdit4.toPlainText().replace('\n', '')),
+                    correctExpression(self.FuncInputSignalTextEdit4.toPlainText().replace('\n', '')),
                     local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points)
@@ -300,15 +317,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 logger.error('CASO DEFAULT EN buildInput')
 
         return timepoints, inputsignalpoints
-
-    def correctExpression(self, expr: str):
-        validfuncs = sp.functions.__all__
-        exprlower = expr.lower()
-        correctedexpr = expr
-        for funct in validfuncs:
-            if funct.lower() + '(' in exprlower:
-                correctedexpr = exprlower.replace(funct.lower(), funct)
-        return correctedexpr
 
     def FORadioButtonActive(self, state):
         if state:
@@ -459,7 +467,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     expr = self.AInputSignalDoubleSpinBox3_2.value() * \
                            sp.Piecewise((2 / DC * t - 1, t <= DC), (-2 / (1 - DC) * t + 2 / (1 - DC) - 1, t > DC))
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignalpoints = f(points)
+                inputsignalpoints = f(np.linspace(0, 1, 1000))
+                if periods_quant.is_integer():
+                    inputsignalpoints = np.tile(inputsignalpoints, int(periods_quant))
+                else:
+                    inputsignalpoints = np.tile(inputsignalpoints, int(np.floor(periods_quant) + 1))
+                    indexlimit = int(1000 * periods_quant)
+                    inputsignalpoints = inputsignalpoints[0:indexlimit]
                 timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
             case 'δ Dirac':
                 timepoints = [0]
@@ -467,7 +481,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             case 'Other':
                 t = sp.Symbol('t', real=True)
                 expr = parse_expr(
-                    self.correctExpression(self.FuncInputSignalTextEdit4_2.toPlainText().replace('\n', '')),
+                    correctExpression(self.FuncInputSignalTextEdit4_2.toPlainText().replace('\n', '')),
                     local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
                 inputsignalpoints = f(points)

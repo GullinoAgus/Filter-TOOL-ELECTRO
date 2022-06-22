@@ -671,22 +671,6 @@
                       </item>
                      </layout>
                     </item>
-                    <item>
-                     <widget class="QLabel" name="TQUANTLabel">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>Periodos a calcular:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QDoubleSpinBox" name="TQUANTDoubleSpinBox"/>
-                    </item>
                    </layout>
                   </widget>
                   <widget class="QWidget" name="page_10">
@@ -770,6 +754,26 @@
                    </layout>
                   </widget>
                   <widget class="QWidget" name="page_13"/>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QDoubleSpinBox" name="TQUANTDoubleSpinBox">
+                  <property name="minimum">
+                   <double>1.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="TQUANTLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Periodos a calcular:</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -1236,6 +1240,13 @@
               </item>
               <item row="1" column="0">
                <layout class="QGridLayout" name="gridLayout_27">
+                <item row="2" column="0">
+                 <widget class="QDoubleSpinBox" name="TQUANTDoubleSpinBox_2">
+                  <property name="minimum">
+                   <double>1.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
                 <item row="0" column="0">
                  <widget class="QStackedWidget" name="InputTypeStackedWidget_2">
                   <property name="sizePolicy">
@@ -1291,8 +1302,14 @@
                       </item>
                       <item row="1" column="1">
                        <widget class="QDoubleSpinBox" name="AInputSignalDoubleSpinBox2_2">
+                        <property name="minimum">
+                         <double>0.010000000000000</double>
+                        </property>
                         <property name="maximum">
                          <double>10000000000000000139372116959414099130712064.000000000000000</double>
+                        </property>
+                        <property name="singleStep">
+                         <double>0.100000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -1304,22 +1321,6 @@
                        </widget>
                       </item>
                      </layout>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="TQUANTLabel_2">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>Periodos a calcular:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QDoubleSpinBox" name="TQUANTDoubleSpinBox_2"/>
                     </item>
                    </layout>
                   </widget>
@@ -1404,6 +1405,19 @@
                    </layout>
                   </widget>
                   <widget class="QWidget" name="page_18"/>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="TQUANTLabel_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Periodos a calcular:</string>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -1674,7 +1688,7 @@
   <slot>CurrRLCInputSignalComboBox()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
