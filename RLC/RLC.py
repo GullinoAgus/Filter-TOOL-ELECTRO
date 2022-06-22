@@ -14,6 +14,7 @@ Measure point:      1         2         3       4
 
 class RLC:
     def __init__(self, R=1, L=1, C=1, measure_point=1, reference=2) -> None:
+        self.transfer_function = None
         if measure_point == reference:
             raise ValueError("Measure point and reference cannot be the same")
 
@@ -73,7 +74,7 @@ class RLC:
                 self.transfer_function = signal.TransferFunction([-1], [1])
                 pass
 
-    def get_bode(self) -> Tuple[list, list, list]:
+    def get_bode(self) -> tuple[int, int, int]:
         return signal.bode(self.transfer_function, n=5000)
 
     def get_output_from_input(self, inputtime=None, inputvalue=None, impulse=False):

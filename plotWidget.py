@@ -45,7 +45,7 @@ class BodePlot(MplCanvas):
         self.cursor = Cursor(self.phaseaxes, useblit=True, color='gray', linestyle='--', linewidth=0.8)
         self.phaseaxes.format_coord = make_format(self.phaseaxes, self.axes)
         self.axes.grid(visible=True, which='both')
-
+        self.phaseaxes.grid(visible=True, which='both')
         self.axes.set_yticks(calculate_ticks(self.axes, 10, round_to=1, center=True))
         self.phaseaxes.set_yticks(calculate_ticks(self.phaseaxes, 10, round_to=1, center=True))
         self.axes.axhline(0, color='black', linewidth=0.75)

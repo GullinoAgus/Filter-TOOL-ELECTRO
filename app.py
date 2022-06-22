@@ -311,7 +311,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     correctExpression(self.FuncInputSignalTextEdit4.toPlainText().replace('\n', '')),
                     local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignalpoints = f(points)
+                inputsignalpoints = f(np.linspace(0, 1, 1000))
+                if periods_quant.is_integer():
+                    inputsignalpoints = np.tile(inputsignalpoints, int(periods_quant))
+                else:
+                    inputsignalpoints = np.tile(inputsignalpoints, int(np.floor(periods_quant) + 1))
+                    indexlimit = int(1000 * periods_quant)
+                    inputsignalpoints = inputsignalpoints[0:indexlimit]
                 timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox4.value()
             case _:
                 logger.error('CASO DEFAULT EN buildInput')
@@ -484,7 +490,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     correctExpression(self.FuncInputSignalTextEdit4_2.toPlainText().replace('\n', '')),
                     local_dict={'t': t}, transformations=T[:])
                 f = sp.lambdify(t, expr, "numpy")
-                inputsignalpoints = f(points)
+                inputsignalpoints = f(np.linspace(0, 1, 1000))
+                if periods_quant.is_integer():
+                    inputsignalpoints = np.tile(inputsignalpoints, int(periods_quant))
+                else:
+                    inputsignalpoints = np.tile(inputsignalpoints, int(np.floor(periods_quant) + 1))
+                    indexlimit = int(1000 * periods_quant)
+                    inputsignalpoints = inputsignalpoints[0:indexlimit]
                 timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox4_2.value()
             case _:
                 logger.error('CASO DEFAULT EN buildInput')
