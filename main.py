@@ -1,9 +1,11 @@
-import sys, logging
+import logging
+import sys
+
 import app
 
 # create logger
-logger = logging.getLogger('no_spam')
-logger.setLevel(logging.DEBUG)
+my_logger = logging.getLogger('no_spam')
+my_logger.setLevel(logging.DEBUG)
 
 # create console handler and set level to debug
 ch = logging.StreamHandler()
@@ -16,7 +18,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 
 # add ch to logger
-logger.addHandler(ch)
+my_logger.addHandler(ch)
 
 
 def main():

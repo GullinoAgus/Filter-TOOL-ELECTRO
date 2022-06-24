@@ -1,6 +1,6 @@
 import sys
 import tokenize
-from main import logger
+from main import my_logger
 import numpy as np
 import sympy as sp
 from PyQt6 import QtWidgets, QtGui
@@ -13,6 +13,7 @@ from UI import Ui_MainWindow
 import os
 
 
+# Funcion utilizada para obtener el path completo. Util para cuando se compacta todò en un binario.
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -22,6 +23,7 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
+# Fucnion para corregir expresiones de las entradas de funciones en texto
 def correctExpression(expr: str):
     validfuncs = sp.functions.__all__
     exprlower = expr.lower()
@@ -32,13 +34,15 @@ def correctExpression(expr: str):
     return correctedexpr
 
 
+# Clase principal.
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        sp.init_printing()
+        # Inicializacion de la GUI
         self.setupUi(self)
         icono = QtGui.QIcon(resource_path('icon.png'))
         self.setWindowIcon(icono)
+        # Creacion y posicionamiento de los widgets de ploteo
         self.Bode = pw.BodePlot(parent=self.BodePlotBox)
         self.InOut = pw.InOutPlot(parent=self.InputAndOutputBox)
         self.PolesZeros = pw.PolesZerosPlot(parent=self.PolesAndZerosBox)
@@ -54,37 +58,47 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.RLCBodePlotBox.layout().addWidget(self.RLCBode)
         self.RLCInputPlotBox.layout().addWidget(self.RLCInOut.navToolBar)
         self.RLCInputPlotBox.layout().addWidget(self.RLCInOut)
+        # Se coloca la imagen del circuito en la GUI. Se puede hacer desde el QTDesigner pero no lo podria compilar
+        # en un binario porque hay que usar resource_path()
         ImageRLC = QtGui.QPixmap(resource_path('RLC.png'))
         self.RLCImage.setPixmap(ImageRLC)
+        # Datos miembro para contener a los filtros que se construyen
         self.workingfilter = None
         self.workingRLC = None
 
+    # Callback para completar los ploteos de Bode y Polos y ceros de la Filter Tool
     def PlotBodeAndPoles(self):
 
         try:
+            # Se construye el filtro de acuerdo a los valores ingresados
             self.workingfilter = self.buildFilter()
+            # Se completan los ploteos de Bode y polos y ceros
             w, a, p = self.workingfilter.getbode()
             self.Bode.plot(w, a, p)
             poles, zeros = self.workingfilter.getpolesandzeros()
             self.PolesZeros.plot(poles, zeros)
 
+        # Control de Excepciones
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except TypeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except ZeroDivisionError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: saca ese cero de ahi carajo.")
+
+            my_logger.error(sys.exc_info()[1])
             pass
         except:
 
-            logger.critical(sys.exc_info()[1])
+            my_logger.critical(sys.exc_info()[1])
 
+    # Callback para la simulacion de salida en base a una funcion de entrada de la Filter Tool
     def EnterTheMatrix(self):
 
         try:
@@ -99,48 +113,44 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except NameError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except AttributeError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except TypeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except tokenize.TokenError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except SyntaxError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except ZeroDivisionError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: saca ese cero de ahi carajo.")
             pass
         except:
+            my_logger.critical(sys.exc_info()[1])
 
-            logger.critical("Error no capturado:")
-            logger.error(sys.exc_info()[1])
-
+    # Metodo fabricador de filtros
     def buildFilter(self):
         if self.FORadio.isChecked():
             match self.FOComboBox.currentText():
+                # Todos los casos verifican si se seleccion ganancia maxima o de banda pasante
                 case 'Low Pass':
                     if self.MGRadioButton.isChecked():
                         return FirstOrder.LowPass(self.CFSettingsDoubleSpinBox.value())
@@ -164,12 +174,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                   self.ZFAFSettingsDoubleSpinBox.value(),
                                                   self.GainSettingsDoubleSpinBox.value())
                 case _:
-                    logger.debug('ERROR CASO DEFAULT DE buildFilter EN FIRST ORDER')
+                    my_logger.critical('ERROR CASO DEFAULT DE buildFilter EN FIRST ORDER')
+
         elif self.SORadio.isChecked():
             match self.SOComboBox.currentText():
                 case 'Low Pass':
                     xi = self.XiSettingsDoubleSpinBox3.value()
                     gain = self.GainSettingsDoubleSpinBox.value()
+                    # Ajustes por seleccion de ganacia de banda pasante o ganancia maxima
                     if 0 < xi < 1 / np.sqrt(2) and self.MGRadioButton.isChecked():
                         peak = 1 / (2 * xi * np.sqrt(1 - 2 * xi ** 2))
                         if peak > np.abs(gain):
@@ -184,22 +196,27 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 case 'High Pass':
                     xi = self.XiSettingsDoubleSpinBox3.value()
                     gain = self.GainSettingsDoubleSpinBox.value()
-                    if 0 < xi < 1 / np.sqrt(2) and self.MGRadioButton.isChecked():
+                    # Ajustes por seleccion de ganacia de banda pasante o ganancia maxima
+                    if 0 < xi < 1 / np.sqrt(2) and self.MGRadioButton.isChecked():  # Seleccion: Ganancia Maxima
                         peak = 1 / (2 * xi * np.sqrt(1 - 2 * xi ** 2))
                         if peak > np.abs(gain):
                             return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi, gain / peak)
                         else:
                             return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi)
-                    elif self.BPGRadioButton.isChecked():
+                    elif self.BPGRadioButton.isChecked():  # Seleccion: Ganancia de Banda Pasante
                         return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi, gain)
                     else:
                         return SecondOrder.HighPass(self.RFSettingsDoubleSpinBox3.value(), xi)
                 case 'All Pass':
-                    return SecondOrder.AllPass(self.RFSettingsDoubleSpinBox3.value(),
-                                               self.XiSettingsDoubleSpinBox3.value(),
-                                               self.GainSettingsDoubleSpinBox.value())
+                    if self.MGRadioButton.isChecked():  # Seleccion: Ganancia Maxima
+                        return SecondOrder.AllPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                   self.XiSettingsDoubleSpinBox3.value())
+                    else:
+                        return SecondOrder.AllPass(self.RFSettingsDoubleSpinBox3.value(),
+                                                   self.XiSettingsDoubleSpinBox3.value(),
+                                                   self.GainSettingsDoubleSpinBox.value())
                 case 'Band Pass':
-                    if self.MGRadioButton.isChecked():
+                    if self.MGRadioButton.isChecked():  # Seleccion: Ganancia Maxima
                         if np.abs(self.GainSettingsDoubleSpinBox.value()) < 1:
                             return SecondOrder.BandPass(self.RFSettingsDoubleSpinBox3.value(),
                                                         self.XiSettingsDoubleSpinBox3.value(),
@@ -207,12 +224,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         else:
                             return SecondOrder.BandPass(self.RFSettingsDoubleSpinBox3.value(),
                                                         self.XiSettingsDoubleSpinBox3.value())
-                    else:
+                    else:   # Seleccion: Ganancia de Banda Pasante
                         return SecondOrder.BandPass(self.RFSettingsDoubleSpinBox3.value(),
                                                     self.XiSettingsDoubleSpinBox3.value(),
                                                     self.GainSettingsDoubleSpinBox.value())
                 case 'Notch':
-                    if self.MGRadioButton.isChecked():
+                    if self.MGRadioButton.isChecked():  # Seleccion: Ganancia Maxima
                         if np.abs(self.GainSettingsDoubleSpinBox.value()) < 1:
                             return SecondOrder.NotchPass(self.RFSettingsDoubleSpinBox3.value(),
                                                          self.XiSettingsDoubleSpinBox3.value(),
@@ -220,12 +237,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         else:
                             return SecondOrder.NotchPass(self.RFSettingsDoubleSpinBox3.value(),
                                                          self.XiSettingsDoubleSpinBox3.value())
-                    else:
+                    else:   # Seleccion: Ganancia de Banda Pasante
                         return SecondOrder.NotchPass(self.RFSettingsDoubleSpinBox3.value(),
                                                      self.XiSettingsDoubleSpinBox3.value(),
                                                      self.GainSettingsDoubleSpinBox.value())
                 case 'Create new filter':
-                    if self.MGRadioButton.isChecked():
+                    if self.MGRadioButton.isChecked():  # Seleccion: Ganancia Maxima
                         if self.NumeratorComboBox.currentIndex() == 0:
                             if self.WSettingsDoubleSpinBox41.value() == 0:
                                 return SecondOrder.ArbitraryFilter(self.WSettingsDoubleSpinBox43.value(),
@@ -245,7 +262,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                                             self.XiSettingsDoubleSpinBox42.value(),
                                                                             k=self.GainSettingsDoubleSpinBox.value(),
                                                                             maxGain=True)
-                    else:
+                    else:   # Seleccion: Ganancia de Banda Pasante
                         if self.NumeratorComboBox.currentIndex() == 0:
                             if self.WSettingsDoubleSpinBox41.value() == 0:
                                 return SecondOrder.ArbitraryFilter(self.WSettingsDoubleSpinBox43.value(),
@@ -264,10 +281,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                                             self.XiSettingsDoubleSpinBox42.value(),
                                                                             k=self.GainSettingsDoubleSpinBox.value())
                 case _:
-                    logger.debug('ERROR CASO DEFAULT DE buildFilter EN SECOND ORDER')
+                    my_logger.critical('ERROR CASO DEFAULT DE buildFilter EN SECOND ORDER')
 
+    # Metodo para preparar el arreglo con los valores de amplitud y tiempo para excitar el sistema(Filtros)
+    # Todas las señales se calculan de 0 a 1 y luego se ajusta el tiempo para que corresponda con la frecuencia
+    # seleccionada
     def buildInput(self):
-        periods_quant = self.TQUANTDoubleSpinBox.value()
+        periods_quant = self.TQUANTDoubleSpinBox.value()    # Cantidad de periodos a calcular
         points = np.linspace(0, periods_quant, int(1000 * periods_quant), endpoint=True)
         inputsignalpoints = None
         timepoints = points
@@ -281,10 +301,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             case 'Periodic Pulse':
                 inputsignalpoints = self.AInputSignalDoubleSpinBox3.value() * \
                                     (signal.square(points * 2 * np.pi, self.DCInputSignalDoubleSpinBox3.value()))
+
                 timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox3.value()
             case 'Triangle Periodic Pulse':
                 t = sp.Symbol('t', real=True)
-                DC = self.DCInputSignalDoubleSpinBox3.value()
+                DC = self.DCInputSignalDoubleSpinBox3.value()   # Duty Cycle
                 if DC == 0:
                     expr = self.AInputSignalDoubleSpinBox3.value() * (-2 * t + 1)
                 elif DC == 1:
@@ -306,29 +327,39 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 timepoints = [0]
                 inputsignalpoints = [1]
             case 'Other':
-                t = sp.Symbol('t', real=True)
+                t = sp.Symbol('t', real=True)   # Variable de expresion
+
+                # Se Toma la expresion ingresada por el usuario, se corrije y se interpreta
                 expr = parse_expr(
                     correctExpression(self.FuncInputSignalTextEdit4.toPlainText().replace('\n', '')),
                     local_dict={'t': t}, transformations=T[:])
+
+                # Transformamos la expresion en un funcion Lambda para poder utilizarla
                 f = sp.lambdify(t, expr, "numpy")
+
+                # genero los puntos para la señal de entrada
                 inputsignalpoints = f(np.linspace(0, 1, 1000))
-                if periods_quant.is_integer():
+
+                if periods_quant.is_integer():  # Cantidad entera de periodos
                     inputsignalpoints = np.tile(inputsignalpoints, int(periods_quant))
-                else:
+                else:   # Cantidad real de periodos
                     inputsignalpoints = np.tile(inputsignalpoints, int(np.floor(periods_quant) + 1))
                     indexlimit = int(1000 * periods_quant)
                     inputsignalpoints = inputsignalpoints[0:indexlimit]
+                # Ajusto los puntos de X a la frecuecnia ingresada
                 timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox4.value()
             case _:
-                logger.error('CASO DEFAULT EN buildInput')
+                my_logger.error('CASO DEFAULT EN buildInput')
 
         return timepoints, inputsignalpoints
 
+    # Callback para Ajustar los tipos de filtros a primer orden
     def FORadioButtonActive(self, state):
         if state:
             self.FilterTypeStackedWidget.setCurrentIndex(0)
             self.CurrFOFilterComboBox(self.FOComboBox.currentIndex())
 
+    # Callback para ajustar los tipos de filtros a segundo orden
     def SORadioButtonActive(self, state):
         if state:
             self.FilterTypeStackedWidget.setCurrentIndex(1)
@@ -346,7 +377,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.FilterInfoStackedWidget.setCurrentIndex(2)
 
-    def CurrInputSignalComboBox(self, index):
+    def CurrInputSignalComboBox(self, index):   # Combo box para los tipos de señales de entrada
         if index == 1:
             self.InputTypeStackedWidget.setCurrentIndex(0)
         elif index == 2 or index == 3:
@@ -362,6 +393,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     Slots for RLC section
     '''
 
+    # Prepara el RLC y plotea Bode y polos y ceros
     def calculateRLC(self):
         if self.MeasurPointComboBox.currentIndex() == -1 or self.ReferenceComboBox.currentIndex() == -1:
             return
@@ -380,20 +412,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Error", f"Error: {sys.exc_info()[1]}.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except TypeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except ZeroDivisionError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: saca ese cero de ahi carajo.")
             pass
         except:
 
-            logger.critical(sys.exc_info()[1])
+            my_logger.critical(sys.exc_info()[1])
 
+    # Callback para la simulacion de salida en base a una funcion de entrada de la RLC Tool
     def calculateRLCInput(self):
         try:
             self.calculateRLC()
@@ -407,47 +440,43 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         except ValueError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except NameError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except AttributeError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except TypeError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: paso algo inesperado.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except tokenize.TokenError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except SyntaxError:
-            QtWidgets.QMessageBox.critical(self, "Error", "Error: La funcion ingresada tiene errores de sintaxis o no "
-                                                          "contiene una funcion predefinida.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Error: Valores invalidos.")
 
-            logger.error(sys.exc_info()[1])
+            my_logger.error(sys.exc_info()[1])
             pass
         except ZeroDivisionError:
             QtWidgets.QMessageBox.critical(self, "Error", "Error: saca ese cero de ahi carajo.")
             pass
         except:
 
-            logger.critical("Error no capturado:")
-            logger.error(sys.exc_info()[1])
+            my_logger.critical("Error no capturado:")
+            my_logger.error(sys.exc_info()[1])
 
     def buildRLCInput(self):
-        periods_quant = self.TQUANTDoubleSpinBox_2.value()
+        periods_quant = self.TQUANTDoubleSpinBox_2.value()  # Cantidad de periodos a calcular
         points = np.linspace(0, periods_quant, int(1000 * periods_quant), endpoint=True)
         inputsignalpoints = None
         timepoints = points
@@ -464,7 +493,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox3_2.value()
             case 'Triangle Periodic Pulse':
                 t = sp.Symbol('t', real=True)
-                DC = self.DCInputSignalDoubleSpinBox3_2.value()
+                DC = self.DCInputSignalDoubleSpinBox3_2.value() # Duty Cycle
                 if DC == 0:
                     expr = self.AInputSignalDoubleSpinBox3_2.value() * (-2 * t + 1)
                 elif DC == 1:
@@ -499,10 +528,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     inputsignalpoints = inputsignalpoints[0:indexlimit]
                 timepoints = points * 2 * np.pi / self.FInputSignalDoubleSpinBox4_2.value()
             case _:
-                logger.error('CASO DEFAULT EN buildInput')
+                my_logger.error('CASO DEFAULT EN buildInput')
 
         return timepoints, inputsignalpoints
 
+    # Validacion de puntos de medicion
     def MeasPointValidation(self, index: int):
         if index == self.ReferenceComboBox.currentIndex():
             self.MeasurPointComboBox.setCurrentIndex(-1)
@@ -511,7 +541,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if index == self.MeasurPointComboBox.currentIndex():
             self.ReferenceComboBox.setCurrentIndex(-1)
 
-    def CurrRLCInputSignalComboBox(self, index):
+    def CurrRLCInputSignalComboBox(self, index):    # Combo box de seleccion de señal de entrada
         if index == 1:
             self.InputTypeStackedWidget_2.setCurrentIndex(0)
         elif index == 2 or index == 3:
