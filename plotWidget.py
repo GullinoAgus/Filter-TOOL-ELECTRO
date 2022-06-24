@@ -38,6 +38,10 @@ class BodePlot(MplCanvas):
         self.axes.set_xscale("linear")
         self.axes.cla()
         self.phaseaxes.cla()
+        self.axes.set_xlabel('$\\omega \\left[ \\frac{rad}{s} \\right]$')
+        self.axes.set_ylabel('$Gain [dB]$')
+        self.phaseaxes.set_ylabel('$Phase [°]$')
+
         self.gainline = self.axes.semilogx(t, y, 'C0', label='Gain')
         self.phaseline = self.phaseaxes.semilogx(t, z, 'C1', label='Phase')
         self.gainlinedataCursor = mplcursors.cursor(self.gainline)
@@ -78,6 +82,10 @@ class InOutPlot(MplCanvas):
             return
 
         self.axes.cla()
+
+        self.axes.set_xlabel('$time [s]$')
+        self.axes.set_ylabel('$Amplitude [Arbitrary Units]$')
+
         if len(inputamp) == 1:
             self.inputline, stemline, baseline = self.axes.stem([0], inputamp, linefmt='C1', markerfmt='C1^',
                                                                 label='Input')
@@ -109,6 +117,8 @@ class PolesZerosPlot(MplCanvas):
 
     def plot(self, poles=None, zeros=None):
         self.axes.cla()
+        self.axes.set_xlabel('$\\Re$')
+        self.axes.set_ylabel('$\\Im$')
         self.axes.format_coord = format_coord_complex
         if len(poles) != 0:
             self.polesline = self.axes.scatter(np.real(poles), np.imag(poles), c='Red', marker='x')
