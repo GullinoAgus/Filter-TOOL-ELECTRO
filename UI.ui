@@ -207,7 +207,7 @@
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_6">
                       <property name="text">
-                       <string>Cut Frecuency</string>
+                       <string>Cut Frecuency [rad/s]</string>
                       </property>
                      </widget>
                     </item>
@@ -218,14 +218,14 @@
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_8">
                       <property name="text">
-                       <string>Pole Frecuency</string>
+                       <string>Pole Frecuency [rad/s]</string>
                       </property>
                      </widget>
                     </item>
                     <item row="1" column="0">
                      <widget class="QLabel" name="label_9">
                       <property name="text">
-                       <string>Zero Frecuency</string>
+                       <string>Zero Frecuency [rad/s]</string>
                       </property>
                      </widget>
                     </item>
@@ -275,7 +275,7 @@
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_17">
                       <property name="text">
-                       <string>Resonant Frecuency</string>
+                       <string>Resonant Frecuency [rad/s]</string>
                       </property>
                      </widget>
                     </item>
@@ -312,6 +312,12 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_7">
                         <item>
                          <widget class="QLabel" name="label_2">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="text">
                            <string>N(s)</string>
                           </property>
@@ -319,6 +325,18 @@
                         </item>
                         <item>
                          <widget class="QComboBox" name="NumeratorComboBox">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>80</width>
+                            <height>0</height>
+                           </size>
+                          </property>
                           <item>
                            <property name="text">
                             <string>1st Order</string>
@@ -333,6 +351,12 @@
                         </item>
                         <item>
                          <widget class="QStackedWidget" name="NumeratorComboBoxStackedWidget">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="currentIndex">
                            <number>0</number>
                           </property>
@@ -343,7 +367,7 @@
                               <item row="0" column="0">
                                <widget class="QLabel" name="label_20">
                                 <property name="text">
-                                 <string>ω</string>
+                                 <string>ω [rad/s]</string>
                                 </property>
                                </widget>
                               </item>
@@ -372,7 +396,7 @@
                                </sizepolicy>
                               </property>
                               <property name="text">
-                               <string>ω</string>
+                               <string>ω [rad/s]</string>
                               </property>
                               <property name="alignment">
                                <set>Qt::AlignCenter</set>
@@ -459,7 +483,7 @@
                              </size>
                             </property>
                             <property name="text">
-                             <string>ω</string>
+                             <string>ω [rad/s]</string>
                             </property>
                             <property name="textFormat">
                              <enum>Qt::AutoText</enum>
@@ -535,7 +559,7 @@
                 <item row="0" column="0">
                  <widget class="QRadioButton" name="BPGRadioButton">
                   <property name="text">
-                   <string>Band pass gain</string>
+                   <string>Band pass gain </string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -672,7 +696,7 @@
                        </sizepolicy>
                       </property>
                       <property name="text">
-                       <string>Amplitude</string>
+                       <string>Amplitude [UA]</string>
                       </property>
                      </widget>
                     </item>
@@ -698,14 +722,14 @@
                       <item row="0" column="0">
                        <widget class="QLabel" name="label_4">
                         <property name="text">
-                         <string>Frecuency</string>
+                         <string>Frecuency [rad/s]</string>
                         </property>
                        </widget>
                       </item>
                       <item row="1" column="0">
                        <widget class="QLabel" name="label_5">
                         <property name="text">
-                         <string>Amplitude</string>
+                         <string>Amplitude [UA]</string>
                         </property>
                        </widget>
                       </item>
@@ -744,21 +768,21 @@
                     <item row="2" column="0">
                      <widget class="QLabel" name="label_16">
                       <property name="text">
-                       <string>Duty Cycle</string>
+                       <string>Duty Cycle [s]</string>
                       </property>
                      </widget>
                     </item>
                     <item row="1" column="0">
                      <widget class="QLabel" name="label_15">
                       <property name="text">
-                       <string>Frecuency</string>
+                       <string>Frecuency [rad/s]</string>
                       </property>
                      </widget>
                     </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_14">
                       <property name="text">
-                       <string>Amplitude</string>
+                       <string>Amplitude [UA]</string>
                       </property>
                      </widget>
                     </item>
@@ -808,23 +832,6 @@
                   </widget>
                   <widget class="QWidget" name="page_4">
                    <layout class="QGridLayout" name="gridLayout_11">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_11">
-                      <property name="text">
-                       <string>f(t)</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label_12">
-                      <property name="text">
-                       <string>Frecuency</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="QTextEdit" name="FuncInputSignalTextEdit4"/>
-                    </item>
                     <item row="1" column="1">
                      <widget class="QDoubleSpinBox" name="FInputSignalDoubleSpinBox4">
                       <property name="minimum">
@@ -835,6 +842,26 @@
                       </property>
                       <property name="value">
                        <double>1.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QTextEdit" name="FuncInputSignalTextEdit4"/>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_12">
+                      <property name="text">
+                       <string>Frecuency [rad/s]</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_11">
+                      <property name="text">
+                       <string>f(t)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -859,7 +886,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Periodos a calcular:</string>
+                   <string>Periods to compute:</string>
                   </property>
                  </widget>
                 </item>
@@ -868,7 +895,7 @@
               <item row="2" column="0">
                <widget class="QPushButton" name="pushButton">
                 <property name="text">
-                 <string>Enter the matix</string>
+                 <string>Enter the matrix</string>
                 </property>
                </widget>
               </item>
@@ -1035,7 +1062,7 @@
                     <property name="currentIndex">
                      <number>-1</number>
                     </property>
-                    <property name="placeholderText">
+                    <property name="placeholderText" stdset="0">
                      <string>Select point</string>
                     </property>
                     <item>
@@ -1081,7 +1108,7 @@
                     <property name="currentIndex">
                      <number>-1</number>
                     </property>
-                    <property name="placeholderText">
+                    <property name="placeholderText" stdset="0">
                      <string>Select point</string>
                     </property>
                     <item>
@@ -1247,7 +1274,7 @@
                      </sizepolicy>
                     </property>
                     <property name="text">
-                     <string>Resonant Frequency</string>
+                     <string>Resonant Frequency [rad/s]</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
@@ -1361,7 +1388,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>1</number>
+                   <number>2</number>
                   </property>
                   <widget class="QWidget" name="page_14">
                    <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -1400,14 +1427,14 @@
                       <item row="0" column="0">
                        <widget class="QLabel" name="label_27">
                         <property name="text">
-                         <string>Frecuency</string>
+                         <string>Frecuency [rad/s]</string>
                         </property>
                        </widget>
                       </item>
                       <item row="1" column="0">
                        <widget class="QLabel" name="label_28">
                         <property name="text">
-                         <string>Amplitude</string>
+                         <string>Amplitude [UA]</string>
                         </property>
                        </widget>
                       </item>
@@ -1449,21 +1476,21 @@
                     <item row="2" column="0">
                      <widget class="QLabel" name="label_29">
                       <property name="text">
-                       <string>Duty Cycle</string>
+                       <string>Duty Cycle [s]</string>
                       </property>
                      </widget>
                     </item>
                     <item row="1" column="0">
                      <widget class="QLabel" name="label_30">
                       <property name="text">
-                       <string>Frecuency</string>
+                       <string>Frecuency [rad/s]</string>
                       </property>
                      </widget>
                     </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="label_31">
                       <property name="text">
-                       <string>Amplitude</string>
+                       <string>Amplitude [UA]</string>
                       </property>
                      </widget>
                     </item>
@@ -1560,7 +1587,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Periodos a calcular:</string>
+                   <string>Periods to compute:</string>
                   </property>
                  </widget>
                 </item>
@@ -1569,7 +1596,7 @@
               <item row="2" column="0">
                <widget class="QPushButton" name="RLCInputpushButton">
                 <property name="text">
-                 <string>Enter the matix</string>
+                 <string>Enter the matrix</string>
                 </property>
                </widget>
               </item>
@@ -1832,7 +1859,7 @@
   <slot>CurrRLCInputSignalComboBox()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
