@@ -4,6 +4,7 @@ from matplotlib.widgets import Cursor
 from matplotlib.backends.backend_qtagg import FigureCanvas
 from matplotlib.backends.backend_qt import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
+from matplotlib.animation import FuncAnimation
 import mplcursors
 
 
@@ -82,9 +83,8 @@ class InOutPlot(MplCanvas):
             return
 
         self.axes.cla()
-
-        self.axes.set_xlabel('$time [s]$')
-        self.axes.set_ylabel('$Amplitude [Arbitrary Units]$')
+        self.axes.set_xlabel('$Time [s]$')
+        self.axes.set_ylabel('$Amplitude [UA]$')
 
         if len(inputamp) == 1:
             self.inputline, stemline, baseline = self.axes.stem([0], inputamp, linefmt='C1', markerfmt='C1^',

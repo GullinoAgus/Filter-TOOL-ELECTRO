@@ -1388,7 +1388,7 @@
                    </sizepolicy>
                   </property>
                   <property name="currentIndex">
-                   <number>2</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="page_14">
                    <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -1859,7 +1859,7 @@
   <slot>CurrRLCInputSignalComboBox()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

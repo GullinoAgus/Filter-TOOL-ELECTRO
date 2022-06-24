@@ -856,7 +856,7 @@ class Ui_MainWindow(object):
         self.InputTypeStackedWidget.setCurrentIndex(1)
         self.ReferenceComboBox.setCurrentIndex(-1)
         self.MeasurPointComboBox.setCurrentIndex(-1)
-        self.InputTypeStackedWidget_2.setCurrentIndex(2)
+        self.InputTypeStackedWidget_2.setCurrentIndex(1)
         self.NumeratorComboBox.currentIndexChanged['int'].connect(self.NumeratorComboBoxStackedWidget.setCurrentIndex) # type: ignore
         self.SORadio.clicked['bool'].connect(MainWindow.SORadioButtonActive) # type: ignore
         self.FOComboBox.currentIndexChanged['int'].connect(MainWindow.CurrFOFilterComboBox) # type: ignore
