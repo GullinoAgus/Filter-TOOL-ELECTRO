@@ -3,7 +3,7 @@ import sys
 
 if sys.platform == 'win32' or sys.platform == 'cygwin':
     PyInstaller.__main__.run([
-        'main.py',
+        'main_linux.py',
         '--onefile',
         '--windowed',
         '--icon=icon.png',
@@ -12,7 +12,7 @@ if sys.platform == 'win32' or sys.platform == 'cygwin':
     ])
 else:
     PyInstaller.__main__.run([
-        'main.py',
+        'main_linux.py',
         '--onefile',
         '--windowed',
         '--add-data=RLC.png:.',

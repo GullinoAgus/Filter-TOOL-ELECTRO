@@ -13,7 +13,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -198,4 +197,3 @@ fabric.properties
 *.vsix
 
 build
-dist
